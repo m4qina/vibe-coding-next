@@ -6,10 +6,24 @@ Claude Code でバイブコーディングするためのプロジェクトテ�
 
 AIに指示を出すだけで、要件定義から実装まで一貫したフォーマットで開発を進められます。
 
+## 🛠 技術スタック
+
+| カテゴリ | 技術 |
+|----------|------|
+| フレームワーク | Next.js (App Router) |
+| 言語 | TypeScript |
+| スタイリング | Tailwind CSS |
+| Linter / Formatter | ESLint / Prettier |
+| パッケージ管理 | npm |
+| ホスティング | Vercel |
+| CI/CD | GitHub Actions |
+
 ## 📦 テンプレートに含まれるもの
+
 ```
 ├── docs/           # ドキュメントテンプレート
 ├── .github/        # CI/CD 設定
+├── .claude/        # Claude Code カスタムコマンド
 ├── CLAUDE.md       # AI向け指示書
 └── README.md       # このファイル
 ```
@@ -20,10 +34,10 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 1. このテンプレートから新規リポジトリを作成
 2. clone して Claude Code で開く
-3. AIに「要件定義して」と伝えて、作りたいものを決める
-4. AIに「設計して」と伝えて、画面設計・全体設計を行う
-5. AIに「API設計して」と伝えて、API設計を行う（必要に応じて）
-6. AIに「実装して」と伝えて、開発スタート
+3. `/project:requirements` で要件定義
+4. `/project:design` で設計
+5. `/project:api` でAPI設計（必要に応じて）
+6. `/project:implement` で実装スタート
 
 ## 🔄 開発フロー
 
@@ -31,32 +45,34 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 | # | フェーズ | コマンド | 成果物 |
 |---|----------|----------|--------|
-| 1 | 要件定義 | 「要件定義して」 | docs/PRD.md |
-| 2 | 設計 | 「設計して」 | docs/DESIGN.md, SCREEN.md |
-| 3 | API設計 | 「API設計して」 | docs/openapi.yaml |
-| 4 | 実装 | 「実装して」 | src/, Issue更新 |
-| 5 | 繰り返し | 「続きから」 | - |
+| 1 | 要件定義 | `/project:requirements` | docs/PRD.md |
+| 2 | 設計 | `/project:design` | docs/DESIGN.md, SCREEN.md |
+| 3 | API設計 | `/project:api` | docs/openapi.yaml |
+| 4 | 実装 | `/project:implement` | src/, Issue更新 |
+| 5 | 繰り返し | `/project:continue` | - |
 
 ## 💬 コマンド一覧
 
-| やりたいこと | AIへの指示 | 結果 |
-|-------------|-----------|------|
-| 要件定義 | 「要件定義して」 | docs/PRD.md 作成 |
-| 設計 | 「設計して」 | docs/DESIGN.md, SCREEN.md 作成 |
-| API設計 | 「API設計して」 | docs/openapi.yaml 作成 |
-| 実装開始 | 「実装して」 | 環境構築 + コード作成 |
-| タスク作成 | 「〇〇のタスク作って」 | GitHub Issue 作成 |
-| 進捗確認 | 「進捗教えて」 | Issue 一覧から現状サマリー |
-| 作業再開 | 「続きから」 | 前回の状態を把握して再開 |
+Claude Code で以下のスラッシュコマンドが使用可能です：
+
+| コマンド | 説明 | 成果物 |
+|----------|------|--------|
+| `/project:requirements` | 要件定義を行う | docs/PRD.md |
+| `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md |
+| `/project:api` | API設計を行う | docs/openapi.yaml |
+| `/project:implement` | 実装を行う | src/, Issue更新 |
+| `/project:continue` | 前回の続きから再開 | - |
+| `/project:status` | 進捗状況を確認 | - |
+| `/project:task` | 新しいタスクを作成 | GitHub Issue |
 
 ## 📄 ドキュメント構成
 
 | ファイル | 内容 | 作成タイミング |
 |----------|------|---------------|
-| docs/PRD.md | 要件定義書 | 「要件定義して」 |
-| docs/DESIGN.md | 設計書 | 「設計して」 |
-| docs/SCREEN.md | 画面設計 | 「設計して」 |
-| docs/openapi.yaml | API設計（OpenAPI 3.0） | 「API設計して」 |
+| docs/PRD.md | 要件定義書 | `/project:requirements` |
+| docs/DESIGN.md | 設計書 | `/project:design` |
+| docs/SCREEN.md | 画面設計 | `/project:design` |
+| docs/openapi.yaml | API設計（OpenAPI 3.0） | `/project:api` |
 | GitHub Issues | タスク・進捗管理 | 随時更新 |
 
 ### docs/PRD.md（要件定義書）
@@ -87,24 +103,11 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 - 進捗の記録
 - ラベルで分類（feature / bug / docs など）
 
-## ⚙️ GitHub-MCP設定
+## ⚙️ 事前準備
 
 このテンプレートは GitHub MCP を使ってタスク・進捗管理を行います。
 
-👉 [GitHub MCPの設定方法はこちら](docs/SETUP_GITHUB_MCP.md)
-
-## 🛠 技術スタック
-このテンプレートでは以下の技術スタックで実装します。
-
-| カテゴリ | 技術 |
-|----------|------|
-| フレームワーク | Next.js (App Router) |
-| 言語 | TypeScript |
-| スタイリング | Tailwind CSS |
-| Linter / Formatter | ESLint / Prettier |
-| パッケージ管理 | pnpm |
-| ホスティング | Vercel |
-| CI/CD | GitHub Actions |
+👉 [GitHub MCP 設定ガイド](./docs/SETUP_GITHUB_MCP.md)
 
 ## 📝 ライセンス
 

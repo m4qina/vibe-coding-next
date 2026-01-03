@@ -1,6 +1,6 @@
-← [README に戻る](../README.md#-GitHub-MCP設定)
-
 # GitHub MCP 設定ガイド
+
+← [README に戻る](../README.md#%EF%B8%8F-事前準備)
 
 このテンプレートで GitHub Issues 連携を使うための設定手順です。
 
@@ -15,6 +15,7 @@
 ## 2. Claude Code に MCP を設定
 
 `~/.claude/claude_desktop_config.json` に以下を追加:
+
 ```json
 {
   "mcpServers": {
@@ -47,3 +48,7 @@ AIに「GitHubのIssue一覧を見せて」と伝えて、連携できていれ�
 - トークンの権限が `repo` になっているか確認
 - JSON の形式が正しいか確認（カンマ忘れなど）
 - Claude Code を完全に再起動したか確認
+
+---
+
+← [README に戻る](../README.md#%EF%B8%8F-事前準備)
