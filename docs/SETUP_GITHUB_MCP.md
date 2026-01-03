@@ -1,3 +1,5 @@
+← [README に戻る](../README.md#-GitHub-MCP設定)
+
 # GitHub MCP 設定ガイド
 
 このテンプレートで GitHub Issues 連携を使うための設定手順です。
