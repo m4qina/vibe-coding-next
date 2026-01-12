@@ -34,10 +34,11 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 1. このテンプレートから新規リポジトリを作成
 2. clone して Claude Code で開く
-3. `/project:requirements` で要件定義
-4. `/project:design` で設計
-5. `/project:api` でAPI設計（必要に応じて）
-6. `/project:implement` で実装スタート
+3. `docs/INPUT.md` に作りたいものを記載
+4. `/project:requirements` で要件定義
+5. `/project:design` で設計
+6. `/project:api` でAPI設計（必要に応じて）
+7. `/project:implement` で実装スタート
 
 ## Workflow
 
@@ -84,6 +85,7 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 
 | ファイル | 内容 | 作成タイミング |
 |----------|------|---------------|
+| docs/INPUT.md | 要件ヒアリングシート | 最初に記載 |
 | docs/PRD.md | 要件定義書 | `/project:requirements` |
 | docs/DESIGN.md | 設計書 | `/project:design` |
 | docs/SCREEN.md | 画面設計 | `/project:design` |
