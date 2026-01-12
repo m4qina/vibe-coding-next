@@ -23,13 +23,13 @@
 ### 必須
 | カテゴリ | 技術 |
 |----------|------|
-| フレームワーク | Next.js (App Router) 14.x |
+| フレームワーク | Next.js (App Router) 16.x |
 | 言語 | TypeScript 5.x |
-| スタイリング | Tailwind CSS 3.x |
+| スタイリング | Tailwind CSS 4.x |
 | バリデーション | Zod |
 | Linter / Formatter | ESLint / Prettier |
 | パッケージ管理 | npm |
-| Node.js | 20.x |
+| Node.js | 24.x |
 | 単体テスト | Vitest + React Testing Library |
 | E2Eテスト | Playwright |
 | コンポーネント管理 | Storybook |
@@ -67,8 +67,9 @@
 
 ### 4.1 Next.js プロジェクト作成
 ```bash
-npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
+npx create-next-app@latest . --yes
 ```
+※ `--yes` でデフォルト設定（TypeScript, Tailwind CSS, ESLint, App Router, Turbopack）が適用されます
 
 ### 4.2 追加パッケージのインストール
 ```bash
@@ -100,7 +101,7 @@ npx storybook@latest init
 
 **.node-version**
 ```
-20
+24
 ```
 
 **vitest.config.ts**
@@ -191,7 +192,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
