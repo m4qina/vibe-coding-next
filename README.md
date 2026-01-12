@@ -39,6 +39,7 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 5. `/project:design` で設計
 6. `/project:api` でAPI設計（必要に応じて）
 7. `/project:implement` で実装スタート
+8. `/project:deploy` でデプロイ
 
 ## Workflow
 
@@ -51,6 +52,7 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 | 3 | API設計 | `/project:api` | docs/openapi.yaml |
 | 4 | 実装 | `/project:implement` | src/, Issue更新 |
 | 5 | 繰り返し | `/project:continue` | - |
+| 6 | デプロイ | `/project:deploy` | 本番環境 |
 
 ## Commands
 
@@ -64,6 +66,7 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | `/project:implement` | 実装を行う | src/, Issue更新 |
 | `/project:continue` | 進捗確認・作業再開 | - |
 | `/project:review` | コードレビューと修正 | - |
+| `/project:deploy` | デプロイを行う | 本番環境, Analytics設定 |
 
 ## npm Scripts
 
@@ -143,6 +146,7 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | Node.js 24.x | ✅ | JavaScript ランタイム |
 | Claude Code | ✅ | AI コーディングアシスタント |
 | GitHub MCP | ✅ | Issue 管理に必要 |
+| Vercel MCP | ✅ | デプロイに必要 |
 
 ### セットアップ手順
 
@@ -158,6 +162,9 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 
 3. **GitHub MCP** を設定
    👉 [GitHub MCP 設定ガイド](./docs/SETUP_GITHUB_MCP.md)
+
+4. **Vercel MCP** を設定
+   👉 [Vercel MCP 設定ガイド](./docs/SETUP_VERCEL_MCP.md)
 
 ## License
 

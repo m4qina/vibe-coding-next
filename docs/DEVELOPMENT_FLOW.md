@@ -31,12 +31,18 @@ flowchart TB
         E1["continue"] --> E2["Open Issue 確認"] --> E3["次のタスク実装"]
     end
 
+    subgraph phase6 [6. デプロイ]
+        F1["deploy"] --> F2["ビルド確認"] --> F3["Vercel デプロイ"]
+        F3 --> F4["Analytics 有効化"]
+    end
+
     A3 --> B1
     B6 -->|Yes| C1
     B6 -->|No| D1
     C3 --> D1
     D6 --> E1
     E3 --> D5
+    E2 -->|全Issue完了| F1
 ```
 
 ## フェーズ詳細
@@ -72,6 +78,17 @@ flowchart TB
 ### 5. 繰り返し
 - **コマンド**: `/project:continue`
 - **処理内容**: Open な Issue 確認 → 次のタスク実装
+
+### 6. デプロイ
+- **コマンド**: `/project:deploy`
+- **処理内容**:
+  - ビルド確認（npm run build）
+  - 環境変数設定
+  - Vercel へデプロイ（Vercel MCP 使用）
+  - Analytics 有効化案内
+  - 動作確認
+- **成果物**: 本番環境 URL
+- **前提条件**: Vercel MCP が設定されていること
 
 ## その他のコマンド
 
