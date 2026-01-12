@@ -39,8 +39,9 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 4. `/project:requirements` で要件定義
 5. `/project:design` で設計
 6. `/project:api` でAPI設計（必要に応じて）
-7. `/project:implement` で実装スタート
-8. `/project:deploy` でデプロイ
+7. `/project:prototype` でプロトタイプ実装・デザイン確認
+8. `/project:implement` で本実装
+9. `/project:deploy` でデプロイ
 
 ## Workflow
 
@@ -51,9 +52,10 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 | 1 | 要件定義 | `/project:requirements` | docs/PRD.md, reports/COMPETITIVE_ANALYSIS.md |
 | 2 | 設計 | `/project:design` | docs/DESIGN.md, SCREEN.md, GitHub Issues |
 | 3 | API設計 | `/project:api` | docs/openapi.yaml |
-| 4 | 実装 | `/project:implement` | src/, Issue更新 |
-| 5 | 繰り返し | `/project:continue` | - |
-| 6 | デプロイ | `/project:deploy` | 本番環境 |
+| 4 | プロトタイプ | `/project:prototype` | src/components/, Storybook, TOP画面 |
+| 5 | 本実装 | `/project:implement` | src/, Issue更新 |
+| 6 | 繰り返し | `/project:continue` | - |
+| 7 | デプロイ | `/project:deploy` | 本番環境 |
 
 ## Commands
 
@@ -64,14 +66,15 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | `/project:requirements` | 要件定義を行う | docs/PRD.md, reports/COMPETITIVE_ANALYSIS.md |
 | `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md, COMPONENT.md, ERD.md, GitHub Issues |
 | `/project:api` | API設計を行う | docs/openapi.yaml |
-| `/project:implement` | 実装を行う | src/, Issue更新 |
+| `/project:prototype` | プロトタイプ実装（デザイン確認用） | src/components/, Storybook, TOP画面 |
+| `/project:implement` | 本実装を行う | src/, Issue更新 |
 | `/project:continue` | 進捗確認・作業再開 | - |
 | `/project:review` | コードレビューと修正 | - |
 | `/project:deploy` | デプロイを行う | 本番環境, Analytics設定 |
 
 ## npm Scripts
 
-環境構築後（`/project:implement` 実行後）に使用可能：
+環境構築後（`/project:prototype` 実行後）に使用可能：
 
 | コマンド | 説明 |
 |----------|------|

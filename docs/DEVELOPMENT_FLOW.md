@@ -20,28 +20,36 @@ flowchart TB
         C1["api"] --> C2["DESIGN.md 確認"] --> C3["openapi.yaml 作成"]
     end
 
-    subgraph phase4 [4. 実装]
-        D1["implement"] --> D2{"src/ 存在?"}
-        D2 -->|No| D3["環境構築"] --> D4["GitHub Issue 取得"]
-        D2 -->|Yes| D4
-        D4 --> D5["コード実装"] --> D6["Issue 更新・クローズ"]
+    subgraph phase4 [4. プロトタイプ]
+        P1["prototype"] --> P2{"src/ 存在?"}
+        P2 -->|No| P3["環境構築"] --> P4["UIコンポーネント実装"]
+        P2 -->|Yes| P4
+        P4 --> P5["Storybook 作成"]
+        P5 --> P6["TOP画面実装"]
+        P6 --> P7["デザイン確認・承認"]
     end
 
-    subgraph phase5 [5. 繰り返し]
+    subgraph phase5 [5. 本実装]
+        D1["implement"] --> D2["GitHub Issue 取得"]
+        D2 --> D3["コード実装"] --> D4["Issue 更新・クローズ"]
+    end
+
+    subgraph phase6 [6. 繰り返し]
         E1["continue"] --> E2["Open Issue 確認"] --> E3["次のタスク実装"]
     end
 
-    subgraph phase6 [6. デプロイ]
+    subgraph phase7 [7. デプロイ]
         F1["deploy"] --> F2["ビルド確認"] --> F3["Vercel デプロイ"]
         F3 --> F4["Analytics 有効化"]
     end
 
     A3 --> B1
     B6 -->|Yes| C1
-    B6 -->|No| D1
-    C3 --> D1
-    D6 --> E1
-    E3 --> D5
+    B6 -->|No| P1
+    C3 --> P1
+    P7 --> D1
+    D4 --> E1
+    E3 --> D3
     E2 -->|全Issue完了| F1
 ```
 
@@ -55,7 +63,7 @@ flowchart TB
 ### 2. 設計
 - **コマンド**: `/project:design`
 - **処理内容**: PRD.md 確認 → 全体設計・画面設計 → タスク起票
-- **成果物**: docs/DESIGN.md, docs/SCREEN.md, GitHub Issues
+- **成果物**: docs/DESIGN.md, docs/SCREEN.md, docs/COMPONENT.md, GitHub Issues
 
 ### 3. API設計（オプション）
 - **コマンド**: `/project:api`
@@ -63,23 +71,35 @@ flowchart TB
 - **成果物**: docs/openapi.yaml
 - **スキップ条件**: フロントエンドのみのアプリ（外部API/バックエンド不要）
 
-### 4. 実装
+### 4. プロトタイプ
+- **コマンド**: `/project:prototype`
+- **処理内容**:
+  - src/ 無ければ環境構築（一時ディレクトリ経由で create-next-app）
+  - 共通UIコンポーネント実装
+  - Storybook で各コンポーネント確認
+  - TOP画面のみ実装（ダミーデータ）
+  - ユーザーにデザイン確認・承認を依頼
+- **成果物**: src/components/, Storybook, TOP画面
+- **完了条件**: デザインがユーザーに承認されること
+
+### 5. 本実装
 - **コマンド**: `/project:implement`
 - **処理内容**:
-  - src/ 無ければ環境構築（create-next-app）
+  - プロトタイプ完了を確認
   - GitHub Issue からタスク取得
-  - コード実装
-  - Storybook 追加（UIの場合）
+  - コード実装（承認済みコンポーネントを活用）
+  - Storybook 追加（新規UIの場合）
   - lint / format 実行
   - テスト実行
   - Issue 更新・クローズ
 - **成果物**: src/, Issue更新
+- **前提条件**: `/project:prototype` が完了していること
 
-### 5. 繰り返し
+### 6. 繰り返し
 - **コマンド**: `/project:continue`
 - **処理内容**: Open な Issue 確認 → 次のタスク実装
 
-### 6. デプロイ
+### 7. デプロイ
 - **コマンド**: `/project:deploy`
 - **処理内容**:
   - ビルド確認（npm run build）
@@ -95,6 +115,12 @@ flowchart TB
 | コマンド | 説明 |
 |----------|------|
 | `/project:review` | コードレビューと修正 |
+
+## 環境構築の注意
+
+要件定義・設計後に実装を開始する場合、既存ファイル（docs/PRD.md 等）があるため `create-next-app` は直接実行できません。
+
+環境構築時は一時ディレクトリを経由します（詳細は CLAUDE.md の「環境構築手順」を参照）。
 
 ---
 
