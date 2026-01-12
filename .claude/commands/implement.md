@@ -17,7 +17,11 @@ description: 実装を行う
 4. UIコンポーネントの場合
    - Storybook に stories を追加
 
-5. テスト作成
-   - Vitest で単体テスト
+5. lint / format 実行
+   - npm run format
+   - npm run lint
 
-6. 完了したら Issue を更新・クローズ
+6. テスト実行
+   - npm run test（Vitest で単体テスト）
+
+7. 完了したら Issue を更新・クローズ

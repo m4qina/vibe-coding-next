@@ -56,7 +56,6 @@
 | `/project:implement` | 実装を行う |
 | `/project:continue` | 前回の続きから再開 |
 | `/project:status` | 進捗状況を確認 |
-| `/project:task` | 新しいタスクを作成 |
 
 詳細は `.claude/commands/` 配下の各ファイルを参照。
 
@@ -80,7 +79,7 @@ npm install -D prettier eslint-config-prettier
 npm install zod
 
 # テスト
-npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom
+npm install -D vitest @vitejs/plugin-react @testing-library/react @testing-library/jest-dom jsdom
 npm install -D @playwright/test
 
 # Storybook
@@ -88,10 +87,89 @@ npx storybook@latest init
 ```
 
 ### 4.3 設定ファイル作成
-- .prettierrc
-- .node-version（v20）
-- vitest.config.ts
-- playwright.config.ts
+
+**.prettierrc**
+```json
+{
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5"
+}
+```
+
+**.node-version**
+```
+20
+```
+
+**vitest.config.ts**
+```typescript
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
+import path from 'path'
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    globals: true,
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+})
+```
+
+**src/test/setup.ts**
+```typescript
+import '@testing-library/jest-dom'
+```
+
+**playwright.config.ts**
+```typescript
+import { defineConfig, devices } from '@playwright/test'
+
+export default defineConfig({
+  testDir: './e2e',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: 'html',
+  use: {
+    baseURL: 'http://localhost:3000',
+    trace: 'on-first-retry',
+  },
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+  ],
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI,
+  },
+})
+```
+
+### 4.4 npm scripts 追加
+package.json の scripts に以下を追加：
+```json
+{
+  "scripts": {
+    "format": "prettier --write .",
+    "test": "vitest",
+    "test:e2e": "playwright test",
+    "docs:api": "npx @redocly/cli preview-docs docs/openapi.yaml"
+  }
+}
+```
 
 ---
 
@@ -243,6 +321,80 @@ flowchart TB
 - 要素一覧
 - 挙動
 ```
+
+### openapi.yaml テンプレート
+
+```yaml
+openapi: 3.0.3
+info:
+  title: プロジェクト名 API
+  version: 1.0.0
+  description: |
+    API概要をここに記載
+
+servers:
+  - url: http://localhost:3000/api
+    description: 開発環境
+
+paths:
+  /example:
+    get:
+      summary: サンプルエンドポイント
+      operationId: getExample
+      tags:
+        - Example
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleResponse'
+        '400':
+          description: リクエストエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    # 共通エラーレスポンス
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: エラーコード
+          example: INVALID_REQUEST
+        message:
+          type: string
+          description: エラーメッセージ
+          example: リクエストが不正です
+
+    # サンプルレスポンス（削除して使用）
+    ExampleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+```
+
+#### openapi.yaml 命名規則
+- パス: RESTful（`/users`, `/users/{id}`）
+- operationId: camelCase（`getUsers`, `createUser`）
+- スキーマ名: PascalCase（`UserResponse`, `CreateUserRequest`）
 
 ---
 

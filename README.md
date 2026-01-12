@@ -1,12 +1,16 @@
-# Next.js バイブコーディング テンプレート
+-[ ] .github/workflows/（CI/CD）  
+-[ ] .prettierrc などの設定ファイルテンプレート  
+-[ ] セキュリティレビューの達人みたいなファイルを作る
 
-## 🎯 これは何？
+# Next.js Vibe Coding Template
+
+## About
 
 Claude Code でバイブコーディングするためのプロジェクトテンプレートです。
 
 AIに指示を出すだけで、要件定義から実装まで一貫したフォーマットで開発を進められます。
 
-## 🛠 技術スタック
+## Tech Stack
 
 | カテゴリ | 技術 |
 |----------|------|
@@ -18,7 +22,7 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 | ホスティング | Vercel |
 | CI/CD | GitHub Actions |
 
-## 📦 テンプレートに含まれるもの
+## What's Included
 
 ```
 ├── docs/           # ドキュメントテンプレート
@@ -30,7 +34,7 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 ※ `src/` はAIが初回実装時に自動生成します
 
-## 🚀 はじめかた
+## Getting Started
 
 1. このテンプレートから新規リポジトリを作成
 2. clone して Claude Code で開く
@@ -39,7 +43,7 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 5. `/project:api` でAPI設計（必要に応じて）
 6. `/project:implement` で実装スタート
 
-## 🔄 開発フロー
+## Workflow
 
 👉 [開発フロー図](./docs/DEVELOPMENT_FLOW.md)
 
@@ -51,21 +55,36 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 | 4 | 実装 | `/project:implement` | src/, Issue更新 |
 | 5 | 繰り返し | `/project:continue` | - |
 
-## 💬 コマンド一覧
+## Commands
 
 Claude Code で以下のスラッシュコマンドが使用可能です：
 
 | コマンド | 説明 | 成果物 |
 |----------|------|--------|
 | `/project:requirements` | 要件定義を行う | docs/PRD.md |
-| `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md |
+| `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md, GitHub Issues |
 | `/project:api` | API設計を行う | docs/openapi.yaml |
 | `/project:implement` | 実装を行う | src/, Issue更新 |
 | `/project:continue` | 前回の続きから再開 | - |
 | `/project:status` | 進捗状況を確認 | - |
-| `/project:task` | 新しいタスクを作成 | GitHub Issue |
 
-## 📄 ドキュメント構成
+## npm Scripts
+
+環境構築後（`/project:implement` 実行後）に使用可能：
+
+| コマンド | 説明 |
+|----------|------|
+| `npm run dev` | 開発サーバー起動 |
+| `npm run build` | 本番ビルド |
+| `npm run start` | 本番サーバー起動 |
+| `npm run lint` | ESLint 実行 |
+| `npm run format` | Prettier でフォーマット |
+| `npm run test` | Vitest で単体テスト |
+| `npm run test:e2e` | Playwright で E2E テスト |
+| `npm run storybook` | Storybook 起動 |
+| `npm run docs:api` | OpenAPI ドキュメント表示 |
+
+## Documentation
 
 | ファイル | 内容 | 作成タイミング |
 |----------|------|---------------|
@@ -101,14 +120,35 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 ### GitHub Issues（タスク・進捗管理）
 - タスクの作成・管理
 - 進捗の記録
-- ラベルで分類（feature / bug / docs など）
+- ラベルで分類
+  - 初回: feature
+  - 開発中に追加: bug / refactor / docs
 
-## ⚙️ 事前準備
+## Prerequisites
 
-このテンプレートは GitHub MCP を使ってタスク・進捗管理を行います。
+このテンプレートを使用するには以下が必要です：
 
-👉 [GitHub MCP 設定ガイド](./docs/SETUP_GITHUB_MCP.md)
+| 項目 | 必須 | 説明 |
+|------|------|------|
+| Node.js 20.x | ✅ | JavaScript ランタイム |
+| Claude Code | ✅ | AI コーディングアシスタント |
+| GitHub MCP | ✅ | Issue 管理に必要 |
 
-## 📝 ライセンス
+### セットアップ手順
+
+1. **Node.js** をインストール（v20推奨）
+   ```bash
+   node -v  # v20.x.x を確認
+   ```
+
+2. **Claude Code** をインストール
+   ```bash
+   npm install -g @anthropic-ai/claude-code
+   ```
+
+3. **GitHub MCP** を設定
+   👉 [GitHub MCP 設定ガイド](./docs/SETUP_GITHUB_MCP.md)
+
+## License
 
 MIT
