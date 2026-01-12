@@ -14,14 +14,20 @@ description: 要件定義を行う
        - 必須機能
       記載後、再度 /project:requirements を実行してください」
 
-2. docs/INPUT.md の内容を元に docs/PRD.md を作成
+2. 競合調査を実施し reports/COMPETITIVE_ANALYSIS.md を作成
+   - Web検索で競合サービスを調査
+   - 機能比較表を作成
+   - 差別化ポイントを明確化
+   - フォーマットは CLAUDE.md の「競合調査レポートテンプレート」に従う
 
-3. フォーマットは CLAUDE.md の「PRD.md テンプレート」に従う
+3. docs/INPUT.md と競合調査の内容を元に docs/PRD.md を作成
 
-4. README.md を更新
+4. フォーマットは CLAUDE.md の「PRD.md テンプレート」に従う
+
+5. README.md を更新
    - プロジェクト名（タイトル）
    - About（プロジェクト概要）
    - 背景・課題
    ※ テンプレートの説明文は削除し、プロジェクト固有の内容に置き換える
 
-5. 作成後、内容をユーザーに確認する
+6. 作成後、内容をユーザーに確認する

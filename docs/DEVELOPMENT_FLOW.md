@@ -5,7 +5,7 @@
 ```mermaid
 flowchart TB
     subgraph phase1 [1. 要件定義]
-        A1["requirements"] --> A2["ヒアリング"] --> A3["PRD.md 作成"]
+        A1["requirements"] --> A2["競合調査"] --> A3["PRD.md 作成"]
     end
 
     subgraph phase2 [2. 設計]
@@ -49,8 +49,8 @@ flowchart TB
 
 ### 1. 要件定義
 - **コマンド**: `/project:requirements`
-- **処理内容**: ヒアリング → 要件整理
-- **成果物**: docs/PRD.md
+- **処理内容**: INPUT.md 確認 → 競合調査 → PRD 作成
+- **成果物**: reports/COMPETITIVE_ANALYSIS.md, docs/PRD.md
 
 ### 2. 設計
 - **コマンド**: `/project:design`
