@@ -56,3 +56,10 @@ description: 設計を行う
    - Issue 本文: PRD.md の該当機能の詳細を転記
    - ラベル: feature を付与
    - 優先度順に並べる（MVP → 将来対応）
+
+11. reports/WORK_LOG.md に作業履歴を追記
+   - 日付（## YYYY-MM-DD 形式）
+   - フェーズ名（### 設計）
+   - 実施内容
+   - 成果物へのリンク
+   - 作成した Issue 番号一覧

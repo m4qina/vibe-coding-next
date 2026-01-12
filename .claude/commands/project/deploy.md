@@ -47,3 +47,10 @@ description: デプロイを行う
 7. README.md を更新
    - デプロイ URL を追記
    - 本番環境の情報を追加
+
+8. reports/WORK_LOG.md に作業履歴を追記
+   - 日付（## YYYY-MM-DD 形式）
+   - フェーズ名（### デプロイ）
+   - 実施内容
+   - デプロイ URL
+   - 設定した項目（環境変数、Analytics など）

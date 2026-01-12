@@ -91,6 +91,7 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 |----------|------|---------------|
 | docs/INPUT.md | 要件ヒアリングシート | 最初に記載 |
 | reports/COMPETITIVE_ANALYSIS.md | 競合調査レポート | `/project:requirements` |
+| reports/WORK_LOG.md | 作業履歴 | 各フェーズで自動追記 |
 | docs/PRD.md | 要件定義書 | `/project:requirements` |
 | docs/DESIGN.md | 設計書 | `/project:design` |
 | docs/SCREEN.md | 画面設計 | `/project:design` |
@@ -105,6 +106,12 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 - 各競合の強み・弱み
 - 差別化ポイント
 - 参考にすべき点
+
+### reports/WORK_LOG.md（作業履歴）
+- 各フェーズで実施した作業の記録
+- 成果物へのリンク
+- 対応した Issue 番号
+- 変更ファイル一覧
 
 ### docs/PRD.md（要件定義書）
 - プロジェクト概要・背景
