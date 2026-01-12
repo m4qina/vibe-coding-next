@@ -208,6 +208,37 @@ jobs:
         run: npm run build
 ```
 
+### 4.6 Analytics 設定
+Vercel Analytics をデフォルトで導入：
+
+```bash
+npm install @vercel/analytics
+```
+
+`src/app/layout.tsx` に追加：
+```typescript
+import { Analytics } from '@vercel/analytics/react'
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <Analytics />
+      </body>
+    </html>
+  )
+}
+```
+
+#### ユーザー設定が必要な項目
+| 項目 | 設定場所 | 説明 |
+|------|----------|------|
+| Vercel Analytics | Vercel ダッシュボード | Project Settings → Analytics → Enable |
+| Google Analytics（任意） | `.env.local` | `NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX` |
+
+※ Google Analytics を追加する場合は別途 `@next/third-parties` を使用
+
 ---
 
 ## 5. ディレクトリ構成
@@ -311,6 +342,10 @@ jobs:
 ## 5. 非機能要件
 - 対応ブラウザ: Chrome, Safari, Edge 最新版
 - レスポンシブ: 対応
+
+## 6. マネタイズ（該当する場合）
+<!-- 収益化モデル: 広告 / サブスク / 買い切り / フリーミアム / なし -->
+<!-- 課金機能が必要な場合は決済手段も記載 -->
 ```
 
 ### DESIGN.md テンプレート
