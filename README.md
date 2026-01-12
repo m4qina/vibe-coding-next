@@ -138,15 +138,15 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 
 | 項目 | 必須 | 説明 |
 |------|------|------|
-| Node.js 20.x | ✅ | JavaScript ランタイム |
+| Node.js 24.x | ✅ | JavaScript ランタイム |
 | Claude Code | ✅ | AI コーディングアシスタント |
 | GitHub MCP | ✅ | Issue 管理に必要 |
 
 ### セットアップ手順
 
-1. **Node.js** をインストール（v20推奨）
+1. **Node.js** をインストール（v24推奨）
    ```bash
-   node -v  # v20.x.x を確認
+   node -v  # v24.x.x を確認
    ```
 
 2. **Claude Code** をインストール
