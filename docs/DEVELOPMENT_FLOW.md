@@ -59,12 +59,13 @@ flowchart TB
 
 ### 4. 実装
 - **コマンド**: `/project:implement`
-- **処理内容**: 
+- **処理内容**:
   - src/ 無ければ環境構築（create-next-app）
   - GitHub Issue からタスク取得
   - コード実装
   - Storybook 追加（UIの場合）
-  - テスト作成
+  - lint / format 実行
+  - テスト実行
   - Issue 更新・クローズ
 - **成果物**: src/, Issue更新
 
@@ -76,7 +77,7 @@ flowchart TB
 
 | コマンド | 説明 |
 |----------|------|
-| `/project:status` | 進捗状況を確認 |
+| `/project:review` | コードレビューと修正 |
 
 ---
 

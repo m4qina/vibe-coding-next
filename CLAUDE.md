@@ -54,8 +54,8 @@
 | `/project:design` | 設計を行う |
 | `/project:api` | API設計を行う |
 | `/project:implement` | 実装を行う |
-| `/project:continue` | 前回の続きから再開 |
-| `/project:status` | 進捗状況を確認 |
+| `/project:continue` | 進捗確認・作業再開 |
+| `/project:review` | コードレビューと修正 |
 
 詳細は `.claude/commands/` 配下の各ファイルを参照。
 
@@ -169,6 +169,42 @@ package.json の scripts に以下を追加：
     "docs:api": "npx @redocly/cli preview-docs docs/openapi.yaml"
   }
 }
+```
+
+### 4.5 GitHub Actions 追加
+`.github/workflows/ci.yml` を作成：
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test -- --run
+
+      - name: Build
+        run: npm run build
 ```
 
 ---
@@ -320,6 +356,83 @@ flowchart TB
 ### トップ画面（/）
 - 要素一覧
 - 挙動
+```
+
+### COMPONENT.md テンプレート
+
+```markdown
+# コンポーネント設計
+
+## 1. コンポーネント一覧
+
+| コンポーネント名 | 種別 | 説明 |
+|-----------------|------|------|
+| Button | ui | 汎用ボタン |
+| Header | layout | ヘッダー |
+
+## 2. コンポーネント階層図
+
+```mermaid
+graph TD
+    App --> Layout
+    Layout --> Header
+    Layout --> Footer
+    Layout --> Main
+    Main --> Page
+```
+
+## 3. 主要コンポーネント詳細
+
+### Button
+- Props: `variant`, `size`, `disabled`, `onClick`
+- 用途: 汎用的なボタン
+
+### Header
+- Props: なし
+- 用途: 全ページ共通ヘッダー
+```
+
+### ERD.md テンプレート（DB使用時）
+
+```markdown
+# ER図
+
+## 1. テーブル一覧
+
+| テーブル名 | 説明 |
+|-----------|------|
+| users | ユーザー情報 |
+| posts | 投稿情報 |
+
+## 2. ER図
+
+```mermaid
+erDiagram
+    users ||--o{ posts : "has many"
+    users {
+        string id PK
+        string email
+        string name
+        datetime created_at
+    }
+    posts {
+        string id PK
+        string user_id FK
+        string title
+        text content
+        datetime created_at
+    }
+```
+
+## 3. テーブル詳細
+
+### users
+| カラム | 型 | 説明 |
+|--------|-----|------|
+| id | string | 主キー |
+| email | string | メールアドレス |
+| name | string | ユーザー名 |
+| created_at | datetime | 作成日時 |
 ```
 
 ### openapi.yaml テンプレート

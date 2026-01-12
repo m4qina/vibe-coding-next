@@ -1,7 +1,3 @@
--[ ] .github/workflows/（CI/CD）  
--[ ] .prettierrc などの設定ファイルテンプレート  
--[ ] セキュリティレビューの達人みたいなファイルを作る
-
 # Next.js Vibe Coding Template
 
 ## About
@@ -50,7 +46,7 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 | # | フェーズ | コマンド | 成果物 |
 |---|----------|----------|--------|
 | 1 | 要件定義 | `/project:requirements` | docs/PRD.md |
-| 2 | 設計 | `/project:design` | docs/DESIGN.md, SCREEN.md |
+| 2 | 設計 | `/project:design` | docs/DESIGN.md, SCREEN.md, GitHub Issues |
 | 3 | API設計 | `/project:api` | docs/openapi.yaml |
 | 4 | 実装 | `/project:implement` | src/, Issue更新 |
 | 5 | 繰り返し | `/project:continue` | - |
@@ -62,11 +58,11 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | コマンド | 説明 | 成果物 |
 |----------|------|--------|
 | `/project:requirements` | 要件定義を行う | docs/PRD.md |
-| `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md, GitHub Issues |
+| `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md, COMPONENT.md, ERD.md, GitHub Issues |
 | `/project:api` | API設計を行う | docs/openapi.yaml |
 | `/project:implement` | 実装を行う | src/, Issue更新 |
-| `/project:continue` | 前回の続きから再開 | - |
-| `/project:status` | 進捗状況を確認 | - |
+| `/project:continue` | 進捗確認・作業再開 | - |
+| `/project:review` | コードレビューと修正 | - |
 
 ## npm Scripts
 
@@ -91,6 +87,8 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | docs/PRD.md | 要件定義書 | `/project:requirements` |
 | docs/DESIGN.md | 設計書 | `/project:design` |
 | docs/SCREEN.md | 画面設計 | `/project:design` |
+| docs/COMPONENT.md | コンポーネント設計 | `/project:design` |
+| docs/ERD.md | ER図（DB使用時） | `/project:design` |
 | docs/openapi.yaml | API設計（OpenAPI 3.0） | `/project:api` |
 | GitHub Issues | タスク・進捗管理 | 随時更新 |
 
@@ -110,6 +108,16 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 - 画面一覧
 - 画面遷移図
 - 各画面のワイヤーフレーム・要素
+
+### docs/COMPONENT.md（コンポーネント設計）
+- コンポーネント一覧
+- コンポーネント階層図（Mermaid）
+- 主要コンポーネント詳細（Props, 用途）
+
+### docs/ERD.md（ER図）
+- テーブル一覧
+- ER図（Mermaid）
+- テーブル詳細（カラム定義）
 
 ### docs/openapi.yaml（API設計）
 - OpenAPI 3.0 形式
