@@ -53,7 +53,8 @@
 | `/project:requirements` | 要件定義を行う |
 | `/project:design` | 設計を行う |
 | `/project:api` | API設計を行う |
-| `/project:implement` | 実装を行う |
+| `/project:prototype` | プロトタイプ実装（デザイン確認用） |
+| `/project:implement` | 本実装を行う |
 | `/project:continue` | 進捗確認・作業再開 |
 | `/project:review` | コードレビューと修正 |
 | `/project:deploy` | デプロイを行う |
@@ -67,10 +68,22 @@
 `/project:implement` で src/ が存在しない場合に実行：
 
 ### 4.1 Next.js プロジェクト作成
+
+既存ファイル（docs/PRD.md 等）がある場合、`create-next-app` は直接実行できないため、一時ディレクトリを経由する：
+
 ```bash
-npx create-next-app@latest . --yes
+# 1. 一時ディレクトリで Next.js プロジェクトを作成
+npx create-next-app@latest .nextjs-temp --yes
+
+# 2. 生成されたファイルを現在のディレクトリにコピー（既存ファイルは上書きしない）
+cp -rn .nextjs-temp/* .nextjs-temp/.[!.]* . 2>/dev/null || true
+
+# 3. 一時ディレクトリを削除
+rm -rf .nextjs-temp
 ```
+
 ※ `--yes` でデフォルト設定（TypeScript, Tailwind CSS, ESLint, App Router, Turbopack）が適用されます
+※ `-n` オプションで既存ファイル（CLAUDE.md, docs/ 等）は保持されます
 
 ### 4.2 追加パッケージのインストール
 ```bash
