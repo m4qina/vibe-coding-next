@@ -4,11 +4,20 @@
 
 ```mermaid
 flowchart TB
+    subgraph phase0 [0. 事前準備]
+        Z1{"GitHub MCP?"} -->|未設定| Z2["設定を促す"]
+        Z1 -->|設定済| A1
+        Z2 --> A1
+    end
+
     subgraph phase1 [1. 要件定義]
         A1["requirements"] --> A2["競合調査"] --> A3["PRD.md 作成"]
     end
 
     subgraph phase2 [2. 設計]
+        B0{"GitHub MCP?"} -->|未設定| B0a["設定必須"]
+        B0 -->|設定済| B1
+        B0a --> B1
         B1["design"] --> B2["PRD.md 確認"] --> B3["DESIGN.md 作成"]
         B2 --> B4["SCREEN.md 作成"]
         B3 --> B5["GitHub Issues 作成"]
@@ -43,7 +52,7 @@ flowchart TB
         F3 --> F4["Analytics 有効化"]
     end
 
-    A3 --> B1
+    A3 --> B0
     B6 -->|Yes| C1
     B6 -->|No| P1
     C3 --> P1
@@ -53,17 +62,32 @@ flowchart TB
     E2 -->|全Issue完了| F1
 ```
 
+## 事前準備（MCP設定）
+
+開発を始める前に、以下の MCP を設定してください：
+
+| MCP | 用途 | 必要なタイミング |
+|-----|------|-----------------|
+| GitHub MCP | Issue 管理 | 設計フェーズ（必須） |
+| Vercel MCP | デプロイ | デプロイフェーズ（必須） |
+
+設定ガイド：
+- [GitHub MCP 設定](./SETUP_GITHUB_MCP.md)
+- [Vercel MCP 設定](./SETUP_VERCEL_MCP.md)
+
 ## フェーズ詳細
 
 ### 1. 要件定義
 - **コマンド**: `/project:requirements`
 - **処理内容**: INPUT.md 確認 → 競合調査 → PRD 作成
 - **成果物**: reports/COMPETITIVE_ANALYSIS.md, docs/PRD.md
+- **MCP確認**: GitHub MCP 未設定の場合、設定を推奨（ブロックしない）
 
 ### 2. 設計
 - **コマンド**: `/project:design`
 - **処理内容**: PRD.md 確認 → 全体設計・画面設計 → タスク起票
 - **成果物**: docs/DESIGN.md, docs/SCREEN.md, docs/COMPONENT.md, GitHub Issues
+- **MCP確認**: GitHub MCP 未設定の場合、設定を要求（Issue 作成に必須）
 
 ### 3. API設計（オプション）
 - **コマンド**: `/project:api`
@@ -108,7 +132,7 @@ flowchart TB
   - Analytics 有効化案内
   - 動作確認
 - **成果物**: 本番環境 URL
-- **前提条件**: Vercel MCP が設定されていること
+- **MCP確認**: Vercel MCP 未設定の場合、設定を要求
 
 ## その他のコマンド
 
