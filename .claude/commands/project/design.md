@@ -65,8 +65,10 @@ description: 設計を行う
      - 外部API連携がある場合はその情報も記載
 
    次のステップ：
-   - REST API を選択 → `/project:api` → `/project:prototype`
-   - Server Actions または なし → `/project:prototype`
+   - REST API を選択 → `/project:api` → `/project:setup`
+   - Server Actions または なし → `/project:setup`
+
+   ※ src/ が既に存在する場合は `/project:prototype` へ直接進む
 
 ## GitHub Issue 作成
 

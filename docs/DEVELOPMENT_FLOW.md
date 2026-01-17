@@ -29,34 +29,42 @@ flowchart TB
         C1["api"] --> C2["DESIGN.md 確認"] --> C3["openapi.yaml 作成"]
     end
 
-    subgraph phase4 [4. プロトタイプ]
-        P1["prototype"] --> P2{"src/ 存在?"}
-        P2 -->|No| P3["環境構築"] --> P4["UIコンポーネント実装"]
-        P2 -->|Yes| P4
-        P4 --> P5["Storybook 作成"]
-        P5 --> P6["TOP画面実装"]
-        P6 --> P7["デザイン確認・承認"]
+    subgraph phase4 [4. 環境構築]
+        S1["setup"] --> S2{"src/ 存在?"}
+        S2 -->|No| S3["環境構築実行"]
+        S2 -->|Yes| S4["スキップ"]
+        S3 --> S5["動作確認"]
     end
 
-    subgraph phase5 [5. 本実装]
+    subgraph phase5 [5. プロトタイプ]
+        P1["prototype"] --> P2["UIコンポーネント実装"]
+        P2 --> P3["Storybook 作成"]
+        P3 --> P4["TOP画面実装"]
+        P4 --> P5["DESIGN_CONCEPT.md 作成"]
+        P5 --> P6["デザイン確認・承認"]
+    end
+
+    subgraph phase6 [6. 本実装]
         D1["implement"] --> D2["GitHub Issue 取得"]
         D2 --> D3["コード実装"] --> D4["Issue 更新・クローズ"]
     end
 
-    subgraph phase6 [6. 繰り返し]
+    subgraph phase7 [7. 繰り返し]
         E1["continue"] --> E2["Open Issue 確認"] --> E3["次のタスク実装"]
     end
 
-    subgraph phase7 [7. デプロイ]
+    subgraph phase8 [8. デプロイ]
         F1["deploy"] --> F2["ビルド確認"] --> F3["Vercel デプロイ"]
         F3 --> F4["Analytics 有効化"]
     end
 
     A3 --> B0
     B6 -->|Yes| C1
-    B6 -->|No| P1
-    C3 --> P1
-    P7 --> D1
+    B6 -->|No| S1
+    C3 --> S1
+    S5 --> P1
+    S4 --> P1
+    P6 --> D1
     D4 --> E1
     E3 --> D3
     E2 -->|全Issue完了| F1
@@ -95,18 +103,28 @@ flowchart TB
 - **成果物**: docs/openapi.yaml
 - **スキップ条件**: フロントエンドのみのアプリ（外部API/バックエンド不要）
 
-### 4. プロトタイプ
-- **コマンド**: `/project:prototype`
+### 4. 環境構築
+- **コマンド**: `/project:setup`
 - **処理内容**:
   - src/ 無ければ環境構築（一時ディレクトリ経由で create-next-app）
+  - 追加パッケージのインストール
+  - 設定ファイル作成
+  - 動作確認
+- **成果物**: src/, 設定ファイル一式
+- **スキップ条件**: src/ が既に存在する場合
+
+### 5. プロトタイプ
+- **コマンド**: `/project:prototype`
+- **処理内容**:
   - 共通UIコンポーネント実装
   - Storybook で各コンポーネント確認
   - TOP画面のみ実装（ダミーデータ）
+  - DESIGN_CONCEPT.md 作成（カラー、タイポグラフィ、必要な画像一覧）
   - ユーザーにデザイン確認・承認を依頼
-- **成果物**: src/components/, Storybook, TOP画面
-- **完了条件**: デザインがユーザーに承認されること
+- **成果物**: src/components/, Storybook, TOP画面, docs/DESIGN_CONCEPT.md
+- **完了条件**: デザインコンセプトがユーザーに承認されること
 
-### 5. 本実装
+### 6. 本実装
 - **コマンド**: `/project:implement`
 - **処理内容**:
   - プロトタイプ完了を確認
@@ -119,11 +137,11 @@ flowchart TB
 - **成果物**: src/, Issue更新
 - **前提条件**: `/project:prototype` が完了していること
 
-### 6. 繰り返し
+### 7. 繰り返し
 - **コマンド**: `/project:continue`
 - **処理内容**: Open な Issue 確認 → 次のタスク実装
 
-### 7. デプロイ
+### 8. デプロイ
 - **コマンド**: `/project:deploy`
 - **処理内容**:
   - ビルド確認（npm run build）
