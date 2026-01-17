@@ -58,6 +58,9 @@ description: 設計を行う
    - ユーザーに以下の選択肢を提示：
      - **Supabase**: ユーザー認証、DBが必要な場合（ローカル: Supabase Local / 本番: Supabase Cloud）
      - **なし**: 静的サイト、ローカルストレージのみで十分な場合
+   - Supabase を選択した場合、追加で確認：
+     - **認証方式**: Email/Password, Magic Link, OAuth（Google, GitHub など）, なし
+     - **ファイルストレージ**: 使用する（Supabase Storage）/ 使用しない
    - **【必須】決定後、docs/DESIGN.md の「データストレージ」セクションに記録**
 
 10. **データ通信方針を決定し、DESIGN.md に記録する**

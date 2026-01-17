@@ -188,6 +188,18 @@ package.json の scripts に以下を追加：
 }
 ```
 
+**Supabase 使用時は以下も追加：**
+```json
+{
+  "scripts": {
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "supabase:reset": "supabase db reset"
+  }
+}
+```
+
 ### 4.5 GitHub Actions 追加
 `.github/workflows/ci.yml` を作成：
 ```yaml
@@ -334,6 +346,147 @@ npx supabase db reset
 ```
 
 マイグレーションファイルは `supabase/migrations/` に保存されます。
+
+#### Storage（画像アップロード）
+
+Supabase Storage は `supabase start` で自動的に起動します。
+
+**バケット作成（SQL マイグレーション）**
+
+`supabase/migrations/XXXXXX_create_storage_bucket.sql`:
+```sql
+-- バケット作成
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('images', 'images', true);
+
+-- アップロードポリシー（認証ユーザーのみ）
+CREATE POLICY "Authenticated users can upload images"
+ON storage.objects FOR INSERT
+TO authenticated
+WITH CHECK (bucket_id = 'images');
+
+-- 閲覧ポリシー（全員）
+CREATE POLICY "Anyone can view images"
+ON storage.objects FOR SELECT
+TO public
+USING (bucket_id = 'images');
+```
+
+**アップロード実装例**
+
+`src/lib/storage.ts`:
+```typescript
+import { supabase } from './supabase'
+
+export async function uploadImage(file: File, path: string) {
+  const { data, error } = await supabase.storage
+    .from('images')
+    .upload(path, file)
+
+  if (error) throw error
+  return data
+}
+
+export function getImageUrl(path: string) {
+  const { data } = supabase.storage
+    .from('images')
+    .getPublicUrl(path)
+
+  return data.publicUrl
+}
+```
+
+#### Auth（認証）
+
+Supabase Auth も `supabase start` で自動的に起動します。
+
+**対応認証方式**
+- Email / Password
+- Magic Link（パスワードレス）
+- OAuth（Google, GitHub, Twitter など）
+- Phone Auth（SMS）
+
+**認証実装例**
+
+`src/lib/auth.ts`:
+```typescript
+import { supabase } from './supabase'
+
+// サインアップ
+export async function signUp(email: string, password: string) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  })
+  if (error) throw error
+  return data
+}
+
+// サインイン
+export async function signIn(email: string, password: string) {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  })
+  if (error) throw error
+  return data
+}
+
+// サインアウト
+export async function signOut() {
+  const { error } = await supabase.auth.signOut()
+  if (error) throw error
+}
+
+// 現在のユーザー取得
+export async function getCurrentUser() {
+  const { data: { user } } = await supabase.auth.getUser()
+  return user
+}
+```
+
+**セッション管理（App Router）**
+
+`src/components/providers/AuthProvider.tsx`:
+```typescript
+'use client'
+
+import { createContext, useContext, useEffect, useState } from 'react'
+import { User } from '@supabase/supabase-js'
+import { supabase } from '@/lib/supabase'
+
+const AuthContext = createContext<{ user: User | null }>({ user: null })
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_, session) => setUser(session?.user ?? null)
+    )
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  return (
+    <AuthContext.Provider value={{ user }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+
+export const useAuth = () => useContext(AuthContext)
+```
+
+**OAuth 設定（本番環境）**
+
+1. Supabase ダッシュボード → Authentication → Providers
+2. 使用するプロバイダーを有効化（Google, GitHub など）
+3. 各プロバイダーの Client ID / Secret を設定
+
+※ ローカル環境では Email/Password 認証でテスト可能
 
 #### 本番環境（Supabase Cloud）へのデプロイ
 
@@ -585,6 +738,18 @@ npx supabase db reset
 |------|--------|
 | ローカル | Supabase Local（Docker） |
 | 本番 | Supabase Cloud |
+
+### 認証（Supabase 使用時）
+<!-- 使用する認証方式を選択 -->
+- [ ] Email / Password
+- [ ] Magic Link（パスワードレス）
+- [ ] OAuth（Google, GitHub など）
+- [ ] なし（認証不要）
+
+### ファイルストレージ（Supabase 使用時）
+<!-- 画像等のアップロードが必要な場合 -->
+- [ ] 使用する（Supabase Storage）
+- [ ] 使用しない
 
 ## 5. データ通信方針
 <!-- API / Server Actions / なし のいずれかを選択し、理由を記載 -->
