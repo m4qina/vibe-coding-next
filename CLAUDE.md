@@ -37,6 +37,7 @@
 ### プロジェクトに応じて追加
 | カテゴリ | 選択肢 |
 |----------|--------|
+| データストレージ | Supabase（ローカル: Supabase Local / 本番: Supabase Cloud） |
 | UIコンポーネント | shadcn/ui |
 | アイコン | Lucide |
 | フォーム | React Hook Form |
@@ -254,6 +255,96 @@ export default function RootLayout({ children }) {
 
 ※ Google Analytics を追加する場合は別途 `@next/third-parties` を使用
 
+### 4.7 Supabase Local 設定（データストレージ使用時）
+
+データストレージに Supabase を使用する場合、以下の手順でローカル環境を構築：
+
+#### 前提条件
+- Docker Desktop がインストールされていること
+
+#### セットアップ手順
+
+```bash
+# 1. Supabase CLI のインストール
+npm install -D supabase
+
+# 2. Supabase クライアントのインストール
+npm install @supabase/supabase-js
+
+# 3. Supabase プロジェクトの初期化
+npx supabase init
+
+# 4. ローカル環境の起動
+npx supabase start
+```
+
+起動後、以下の情報が表示されます：
+- API URL: `http://127.0.0.1:54321`
+- anon key: ローカル用の匿名キー
+- Studio URL: `http://127.0.0.1:54323`（管理画面）
+
+#### 環境変数の設定
+
+`.env.local` を作成：
+```bash
+# Supabase（ローカル開発用）
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<起動時に表示されたanon key>
+```
+
+`.env.local.example` を作成（Git管理用）：
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+#### Supabase クライアント設定
+
+`src/lib/supabase.ts` を作成：
+```typescript
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+```
+
+#### npm scripts 追加
+```json
+{
+  "scripts": {
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "supabase:reset": "supabase db reset"
+  }
+}
+```
+
+#### マイグレーション
+
+```bash
+# 新しいマイグレーションを作成
+npx supabase migration new <migration_name>
+
+# マイグレーションを適用
+npx supabase db reset
+```
+
+マイグレーションファイルは `supabase/migrations/` に保存されます。
+
+#### 本番環境（Supabase Cloud）へのデプロイ
+
+1. [Supabase](https://supabase.com) でプロジェクトを作成
+2. 本番用の環境変数を Vercel に設定
+3. マイグレーションを本番に適用：
+   ```bash
+   npx supabase link --project-ref <project-id>
+   npx supabase db push
+   ```
+
 ---
 
 ## 5. ディレクトリ構成
@@ -271,6 +362,9 @@ export default function RootLayout({ children }) {
 │   ├── lib/              # ユーティリティ関数
 │   ├── types/            # 型定義
 │   └── styles/           # グローバルCSS
+├── supabase/             # Supabase 設定（使用時のみ）
+│   ├── migrations/       # DBマイグレーション
+│   └── config.toml       # Supabase設定
 ├── .storybook/           # Storybook 設定
 └── docs/                 # ドキュメント
 ```
@@ -477,7 +571,22 @@ export default function RootLayout({ children }) {
 ## 3. 状態管理
 <!-- 状態管理の方針 -->
 
-## 4. データ通信方針
+## 4. データストレージ
+<!-- 使用する / 使用しない を選択 -->
+
+### 方針
+<!-- 例: Supabase / なし（ローカルストレージのみ）/ なし（静的サイト） -->
+
+### 選定理由
+<!-- なぜこの方針を選んだか -->
+
+### 環境構成（Supabase 使用時）
+| 環境 | 接続先 |
+|------|--------|
+| ローカル | Supabase Local（Docker） |
+| 本番 | Supabase Cloud |
+
+## 5. データ通信方針
 <!-- API / Server Actions / なし のいずれかを選択し、理由を記載 -->
 
 ### 方針
@@ -489,10 +598,10 @@ export default function RootLayout({ children }) {
 ### 補足
 <!-- 外部API連携がある場合はここに記載 -->
 
-## 5. 主要コンポーネント
+## 6. 主要コンポーネント
 <!-- コンポーネント設計 -->
 
-## 6. 外部連携
+## 7. 外部連携
 <!-- API、外部サービス -->
 ```
 

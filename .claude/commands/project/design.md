@@ -23,7 +23,8 @@ description: 設計を行う
    - 技術スタック
    - ディレクトリ構成
    - 状態管理方針
-   - データ通信方針（ステップ9で決定後に追記）
+   - データストレージ方針（ステップ9で決定後に追記）
+   - データ通信方針（ステップ10で決定後に追記）
 
 3. docs/SCREEN.md を作成
    - 画面一覧
@@ -52,27 +53,34 @@ description: 設計を行う
 
 ## 次のステップ判断
 
-9. **データ通信方針を決定し、DESIGN.md に記録する**
-   - PRD.md と DESIGN.md の内容から判断
+9. **データストレージ方針を決定し、DESIGN.md に記録する**
+   - PRD.md の機能要件からデータ永続化の必要性を判断
    - ユーザーに以下の選択肢を提示：
-     - **Server Actions**: シンプルなデータ操作、Next.js 内で完結
-     - **REST API（/project:api）**: 外部公開、モバイルアプリ連携、複雑なAPI
-     - **なし**: 静的サイト、ローカルストレージのみ
-   - 判断理由を説明し、ユーザーの承認を得る
-   - **【必須】決定後、docs/DESIGN.md の「データ通信方針」セクションに記録：**
-     - 選択した方針（Server Actions / REST API / なし）
-     - 選定理由
-     - 外部API連携がある場合はその情報も記載
+     - **Supabase**: ユーザー認証、DBが必要な場合（ローカル: Supabase Local / 本番: Supabase Cloud）
+     - **なし**: 静的サイト、ローカルストレージのみで十分な場合
+   - **【必須】決定後、docs/DESIGN.md の「データストレージ」セクションに記録**
 
-   次のステップ：
-   - REST API を選択 → `/project:api` → `/project:setup`
-   - Server Actions または なし → `/project:setup`
+10. **データ通信方針を決定し、DESIGN.md に記録する**
+    - PRD.md と DESIGN.md の内容から判断
+    - ユーザーに以下の選択肢を提示：
+      - **Server Actions**: シンプルなデータ操作、Next.js 内で完結
+      - **REST API（/project:api）**: 外部公開、モバイルアプリ連携、複雑なAPI
+      - **なし**: 静的サイト、ローカルストレージのみ
+    - 判断理由を説明し、ユーザーの承認を得る
+    - **【必須】決定後、docs/DESIGN.md の「データ通信方針」セクションに記録：**
+      - 選択した方針（Server Actions / REST API / なし）
+      - 選定理由
+      - 外部API連携がある場合はその情報も記載
 
-   ※ src/ が既に存在する場合は `/project:prototype` へ直接進む
+    次のステップ：
+    - REST API を選択 → `/project:api` → `/project:setup`
+    - Server Actions または なし → `/project:setup`
+
+    ※ src/ が既に存在する場合は `/project:prototype` へ直接進む
 
 ## GitHub Issue 作成
 
-10. **ユーザー確認後、GitHub Issue を作成**
+11. **ユーザー確認後、GitHub Issue を作成**
     - GitHub MCP を使用して Issue を作成
     - PRD.md の機能一覧から Issue を作成
     - 1機能 = 1 Issue を基本とする
@@ -89,7 +97,7 @@ description: 設計を行う
 
 ## 作業履歴
 
-11. **【必須】reports/WORK_LOG.md に作業履歴を追記**
+12. **【必須】reports/WORK_LOG.md に作業履歴を追記**
     - 日付（## YYYY-MM-DD 形式）
     - フェーズ名（### 設計）
     - 実施内容
