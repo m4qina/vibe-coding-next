@@ -36,7 +36,7 @@ description: 環境構築を行う
    - `npm run storybook` で Storybook 起動確認
    - Supabase 使用時: `http://127.0.0.1:54323` で Studio が開けることを確認
 
-3. **【必須】reports/WORK_LOG.md に作業履歴を追記**
+4. **【必須】reports/WORK_LOG.md に作業履歴を追記**
    - 日付（## YYYY-MM-DD 形式）
    - フェーズ名（### 環境構築）
    - 実施内容（セットアップ完了）

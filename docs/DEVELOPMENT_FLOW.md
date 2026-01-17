@@ -20,8 +20,12 @@ flowchart TB
         B0a --> B1
         B1["design"] --> B2["PRD.md 確認"] --> B3["DESIGN.md 作成"]
         B2 --> B4["SCREEN.md 作成"]
-        B3 --> B5["GitHub Issues 作成"]
-        B4 --> B5
+        B3 --> B7["データストレージ決定"]
+        B4 --> B7
+        B7 --> B8{"Supabase?"}
+        B8 -->|Yes| B9["認証・Storage決定"]
+        B8 -->|No| B5
+        B9 --> B5["GitHub Issues 作成"]
         B5 --> B6{"API必要?"}
     end
 
@@ -33,7 +37,10 @@ flowchart TB
         S1["setup"] --> S2{"src/ 存在?"}
         S2 -->|No| S3["環境構築実行"]
         S2 -->|Yes| S4["スキップ"]
-        S3 --> S5["動作確認"]
+        S3 --> S6{"Supabase?"}
+        S6 -->|Yes| S7["Supabase Local 起動"]
+        S6 -->|No| S5
+        S7 --> S5["動作確認"]
     end
 
     subgraph phase5 [5. プロトタイプ]
@@ -54,8 +61,11 @@ flowchart TB
     end
 
     subgraph phase8 [8. デプロイ]
-        F1["deploy"] --> F2["ビルド確認"] --> F3["Vercel デプロイ"]
-        F3 --> F4["Analytics 有効化"]
+        F1["deploy"] --> F2["ビルド確認"] --> F3{"Supabase?"}
+        F3 -->|Yes| F5["Supabase Cloud 設定"]
+        F3 -->|No| F4
+        F5 --> F4["Vercel デプロイ"]
+        F4 --> F6["Analytics 有効化"]
     end
 
     A3 --> B0
@@ -93,8 +103,12 @@ flowchart TB
 
 ### 2. 設計
 - **コマンド**: `/project:design`
-- **処理内容**: PRD.md 確認 → 全体設計・画面設計 → タスク起票
-- **成果物**: docs/DESIGN.md, docs/SCREEN.md, docs/COMPONENT.md, GitHub Issues
+- **処理内容**:
+  - PRD.md 確認 → 全体設計・画面設計
+  - データストレージ方針決定（Supabase / なし）
+  - Supabase 使用時: 認証方式・ファイルストレージの決定
+  - タスク起票（GitHub Issues）
+- **成果物**: docs/DESIGN.md, docs/SCREEN.md, docs/COMPONENT.md, docs/ERD.md（DB使用時）, GitHub Issues
 - **MCP確認**: GitHub MCP 未設定の場合、設定を要求（Issue 作成に必須）
 
 ### 3. API設計（オプション）
@@ -109,9 +123,11 @@ flowchart TB
   - src/ 無ければ環境構築（一時ディレクトリ経由で create-next-app）
   - 追加パッケージのインストール
   - 設定ファイル作成
+  - Supabase 使用時: Supabase Local のセットアップ（Docker）
   - 動作確認
-- **成果物**: src/, 設定ファイル一式
+- **成果物**: src/, 設定ファイル一式, supabase/（Supabase使用時）
 - **スキップ条件**: src/ が既に存在する場合
+- **前提条件**: Supabase 使用時は Docker Desktop が起動していること
 
 ### 5. プロトタイプ
 - **コマンド**: `/project:prototype`
@@ -145,7 +161,8 @@ flowchart TB
 - **コマンド**: `/project:deploy`
 - **処理内容**:
   - ビルド確認（npm run build）
-  - 環境変数設定
+  - Supabase 使用時: Supabase Cloud プロジェクト作成・マイグレーション適用
+  - 環境変数設定（Vercel に Supabase 接続情報を設定）
   - Vercel へデプロイ（Vercel MCP 使用）
   - Analytics 有効化案内
   - 動作確認

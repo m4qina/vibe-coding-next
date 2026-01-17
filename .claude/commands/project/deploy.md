@@ -14,17 +14,31 @@ description: デプロイを行う
    - `npm run build` でビルドが成功するか確認
    - エラーがあれば修正を提案
 
-3. 環境変数の確認
+3. **Supabase Cloud の設定（Supabase 使用時）**
+   - DESIGN.md の「データストレージ」を確認
+   - Supabase を使用している場合:
+     - [Supabase](https://supabase.com) でプロジェクトを作成
+     - プロジェクトの URL と anon key を取得
+     - ローカルのマイグレーションを本番に適用：
+       ```bash
+       npx supabase link --project-ref <project-id>
+       npx supabase db push
+       ```
+     - 認証プロバイダーの設定（OAuth 使用時）
+     - Storage バケットの作成（Storage 使用時）
+
+4. 環境変数の確認
    - `.env.local` または `.env` が存在する場合
      → 本番環境に必要な環境変数をユーザーに確認
+   - Supabase 使用時: 本番用の `NEXT_PUBLIC_SUPABASE_URL` と `NEXT_PUBLIC_SUPABASE_ANON_KEY` を設定
    - Vercel CLI で環境変数を設定（`vercel env add`）
 
-4. デプロイ実行
+5. デプロイ実行
    - Vercel MCP の `deploy_to_vercel` を使用
    - 初回の場合はプロジェクト設定を案内
    - デプロイ URL をユーザーに共有
 
-5. デプロイ後の設定案内
+6. デプロイ後の設定案内
    以下の手動設定が必要な項目をユーザーに案内：
 
    ### Analytics 有効化（推奨）
@@ -40,15 +54,15 @@ description: デプロイを行う
    - Web Analytics: 詳細なアクセス解析
    - Firewall: セキュリティ設定
 
-6. 動作確認
+7. 動作確認
    - デプロイ URL にアクセスして動作確認
    - 問題があれば `get_deployment_build_logs` でログを確認
 
-7. README.md を更新
+8. README.md を更新
    - デプロイ URL を追記
    - 本番環境の情報を追加
 
-8. **【必須】reports/WORK_LOG.md に作業履歴を追記**
+9. **【必須】reports/WORK_LOG.md に作業履歴を追記**
    - 日付（## YYYY-MM-DD 形式）
    - フェーズ名（### デプロイ）
    - 実施内容
