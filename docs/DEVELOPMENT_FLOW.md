@@ -51,16 +51,23 @@ flowchart TB
         P5 --> P6["デザイン確認・承認"]
     end
 
-    subgraph phase6 [6. 本実装]
-        D1["implement"] --> D2["GitHub Issue 取得"]
-        D2 --> D3["コード実装"] --> D4["Issue 更新・クローズ"]
+    subgraph phase6 [6. テスト設計]
+        T1["test-design"] --> T2["テストケース設計"]
+        T2 --> T3["TEST_CASES.md 作成"]
+        T3 --> T4["ユーザー確認"]
     end
 
-    subgraph phase7 [7. 繰り返し]
+    subgraph phase7 [7. 本実装]
+        D1["implement"] --> D2["GitHub Issue 取得"]
+        D2 --> D3["コード実装"] --> D5["E2Eテスト実装"]
+        D5 --> D4["Issue 更新・クローズ"]
+    end
+
+    subgraph phase8 [8. 繰り返し]
         E1["continue"] --> E2["Open Issue 確認"] --> E3["次のタスク実装"]
     end
 
-    subgraph phase8 [8. デプロイ]
+    subgraph phase9 [9. デプロイ]
         F1["deploy"] --> F2["ビルド確認"] --> F3{"Supabase?"}
         F3 -->|Yes| F5["Supabase Cloud 設定"]
         F3 -->|No| F4
@@ -74,7 +81,8 @@ flowchart TB
     C3 --> S1
     S5 --> P1
     S4 --> P1
-    P6 --> D1
+    P6 --> T1
+    T4 --> D1
     D4 --> E1
     E3 --> D3
     E2 -->|全Issue完了| F1
@@ -140,24 +148,35 @@ flowchart TB
 - **成果物**: src/components/, Storybook, TOP画面, docs/DESIGN_CONCEPT.md
 - **完了条件**: デザインコンセプトがユーザーに承認されること
 
-### 6. 本実装
+### 6. テスト設計
+- **コマンド**: `/project:test-design`
+- **処理内容**:
+  - PRD.md と SCREEN.md を確認
+  - E2Eテストケースを設計
+  - 優先度（P0/P1/P2）を設定
+  - ユーザーにテストケースを確認
+- **成果物**: docs/TEST_CASES.md
+- **前提条件**: `/project:prototype` が完了していること（UIが確定していること）
+
+### 7. 本実装
 - **コマンド**: `/project:implement`
 - **処理内容**:
-  - プロトタイプ完了を確認
+  - テスト設計完了を確認
   - GitHub Issue からタスク取得
   - コード実装（承認済みコンポーネントを活用）
+  - E2Eテスト実装（TEST_CASES.md に基づく）
   - Storybook 追加（新規UIの場合）
   - lint / format 実行
-  - テスト実行
+  - 単体テスト・E2Eテスト実行
   - Issue 更新・クローズ
-- **成果物**: src/, Issue更新
-- **前提条件**: `/project:prototype` が完了していること
+- **成果物**: src/, e2e/, Issue更新
+- **前提条件**: `/project:prototype` と `/project:test-design` が完了していること
 
-### 7. 繰り返し
+### 8. 繰り返し
 - **コマンド**: `/project:continue`
 - **処理内容**: Open な Issue 確認 → 次のタスク実装
 
-### 8. デプロイ
+### 9. デプロイ
 - **コマンド**: `/project:deploy`
 - **処理内容**:
   - ビルド確認（npm run build）
