@@ -21,7 +21,8 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 ## What's Included
 
 ```
-├── docs/           # ドキュメントテンプレート
+├── docs/           # 設計・技術ドキュメント
+├── reports/        # 調査・分析レポート
 ├── .github/        # CI/CD 設定
 ├── .claude/        # Claude Code カスタムコマンド
 ├── CLAUDE.md       # AI向け指示書
@@ -34,10 +35,13 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 1. このテンプレートから新規リポジトリを作成
 2. clone して Claude Code で開く
-3. `/project:requirements` で要件定義
-4. `/project:design` で設計
-5. `/project:api` でAPI設計（必要に応じて）
-6. `/project:implement` で実装スタート
+3. `docs/INPUT.md` に作りたいものを記載
+4. `/project:requirements` で要件定義
+5. `/project:design` で設計
+6. `/project:api` でAPI設計（必要に応じて）
+7. `/project:prototype` でプロトタイプ実装・デザイン確認
+8. `/project:implement` で本実装
+9. `/project:deploy` でデプロイ
 
 ## Workflow
 
@@ -45,11 +49,13 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 | # | フェーズ | コマンド | 成果物 |
 |---|----------|----------|--------|
-| 1 | 要件定義 | `/project:requirements` | docs/PRD.md |
+| 1 | 要件定義 | `/project:requirements` | docs/PRD.md, reports/COMPETITIVE_ANALYSIS.md |
 | 2 | 設計 | `/project:design` | docs/DESIGN.md, SCREEN.md, GitHub Issues |
 | 3 | API設計 | `/project:api` | docs/openapi.yaml |
-| 4 | 実装 | `/project:implement` | src/, Issue更新 |
-| 5 | 繰り返し | `/project:continue` | - |
+| 4 | プロトタイプ | `/project:prototype` | src/components/, Storybook, TOP画面 |
+| 5 | 本実装 | `/project:implement` | src/, Issue更新 |
+| 6 | 繰り返し | `/project:continue` | - |
+| 7 | デプロイ | `/project:deploy` | 本番環境 |
 
 ## Commands
 
@@ -57,16 +63,18 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 
 | コマンド | 説明 | 成果物 |
 |----------|------|--------|
-| `/project:requirements` | 要件定義を行う | docs/PRD.md |
+| `/project:requirements` | 要件定義を行う | docs/PRD.md, reports/COMPETITIVE_ANALYSIS.md |
 | `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md, COMPONENT.md, ERD.md, GitHub Issues |
 | `/project:api` | API設計を行う | docs/openapi.yaml |
-| `/project:implement` | 実装を行う | src/, Issue更新 |
+| `/project:prototype` | プロトタイプ実装（デザイン確認用） | src/components/, Storybook, TOP画面 |
+| `/project:implement` | 本実装を行う | src/, Issue更新 |
 | `/project:continue` | 進捗確認・作業再開 | - |
 | `/project:review` | コードレビューと修正 | - |
+| `/project:deploy` | デプロイを行う | 本番環境, Analytics設定 |
 
 ## npm Scripts
 
-環境構築後（`/project:implement` 実行後）に使用可能：
+環境構築後（`/project:prototype` 実行後）に使用可能：
 
 | コマンド | 説明 |
 |----------|------|
@@ -84,6 +92,9 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 
 | ファイル | 内容 | 作成タイミング |
 |----------|------|---------------|
+| docs/INPUT.md | 要件ヒアリングシート | 最初に記載 |
+| reports/COMPETITIVE_ANALYSIS.md | 競合調査レポート | `/project:requirements` |
+| reports/WORK_LOG.md | 作業履歴 | 各フェーズで自動追記 |
 | docs/PRD.md | 要件定義書 | `/project:requirements` |
 | docs/DESIGN.md | 設計書 | `/project:design` |
 | docs/SCREEN.md | 画面設計 | `/project:design` |
@@ -91,6 +102,19 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | docs/ERD.md | ER図（DB使用時） | `/project:design` |
 | docs/openapi.yaml | API設計（OpenAPI 3.0） | `/project:api` |
 | GitHub Issues | タスク・進捗管理 | 随時更新 |
+
+### reports/COMPETITIVE_ANALYSIS.md（競合調査レポート）
+- 調査対象（競合サービス一覧）
+- 機能比較表
+- 各競合の強み・弱み
+- 差別化ポイント
+- 参考にすべき点
+
+### reports/WORK_LOG.md（作業履歴）
+- 各フェーズで実施した作業の記録
+- 成果物へのリンク
+- 対応した Issue 番号
+- 変更ファイル一覧
 
 ### docs/PRD.md（要件定義書）
 - プロジェクト概要・背景
@@ -141,6 +165,7 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | Node.js 24.x | ✅ | JavaScript ランタイム |
 | Claude Code | ✅ | AI コーディングアシスタント |
 | GitHub MCP | ✅ | Issue 管理に必要 |
+| Vercel MCP | ✅ | デプロイに必要 |
 
 ### セットアップ手順
 
@@ -156,6 +181,9 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 
 3. **GitHub MCP** を設定
    👉 [GitHub MCP 設定ガイド](./docs/SETUP_GITHUB_MCP.md)
+
+4. **Vercel MCP** を設定
+   👉 [Vercel MCP 設定ガイド](./docs/SETUP_VERCEL_MCP.md)
 
 ## License
 
