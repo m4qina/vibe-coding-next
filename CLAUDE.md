@@ -61,6 +61,7 @@
 | `/project:continue` | 進捗確認・作業再開 |
 | `/project:review` | コードレビューと修正 |
 | `/project:deploy` | デプロイを行う |
+| `/project:improvements` | 改善リスト作成・Issue一括登録 |
 
 詳細は `.claude/commands/` 配下の各ファイルを参照。
 
