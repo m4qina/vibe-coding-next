@@ -13,12 +13,14 @@ description: 実装を行う
 ## 実装フロー
 
 ### 単一Issue の場合
+
 1. develop から feature/#XX ブランチを作成
 2. 実装
 3. コミット（メッセージに `Closes #XX` を含める）
 4. プッシュ・PR作成
 
 ### 複数Issue の場合（並行開発）
+
 1. git worktree で各Issue用の作業ディレクトリを作成
    ```bash
    git fetch origin
@@ -32,6 +34,7 @@ description: 実装を行う
    ```
 
 ### コミットメッセージ規則
+
 - `Closes #XX` をメッセージに含める（PRマージ時にIssue自動クローズ）
 - 1コミット1Issueを基本とする
 

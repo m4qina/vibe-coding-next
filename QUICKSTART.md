@@ -4,20 +4,20 @@
 
 ## コマンド早見表
 
-| やりたいこと | コマンド |
-|--------------|----------|
-| 要件定義 | `/project:requirements` |
-| 設計 | `/project:design` |
-| API設計 | `/project:api` |
-| 環境構築 | `/project:setup` |
-| プロトタイプ | `/project:prototype` |
-| テスト設計 | `/project:test-design` |
-| 実装（単一） | `/project:implement 30` |
+| やりたいこと | コマンド                      |
+| ------------ | ----------------------------- |
+| 要件定義     | `/project:requirements`       |
+| 設計         | `/project:design`             |
+| API設計      | `/project:api`                |
+| 環境構築     | `/project:setup`              |
+| プロトタイプ | `/project:prototype`          |
+| テスト設計   | `/project:test-design`        |
+| 実装（単一） | `/project:implement 30`       |
 | 実装（複数） | `/project:implement 30,31,32` |
-| 進捗確認 | `/project:continue` |
-| レビュー | `/project:review` |
-| デプロイ | `/project:deploy` |
-| 改善管理 | `/project:improvements` |
+| 進捗確認     | `/project:continue`           |
+| レビュー     | `/project:review`             |
+| デプロイ     | `/project:deploy`             |
+| 改善管理     | `/project:improvements`       |
 
 ### 実装コマンドの使い方
 
@@ -42,15 +42,15 @@
 
 ## ドキュメント構成
 
-| ドキュメント | 内容 | SSOT |
-|-------------|------|------|
-| docs/PRD.md | 機能要件・制約 | ✓ |
-| docs/DESIGN.md | 技術スタック・アーキテクチャ | ✓ |
-| docs/SCREEN.md | 画面設計 | ✓ |
-| docs/COMPONENT.md | コンポーネント設計 | ✓ |
-| docs/DATA_MODEL.md | データモデル | ✓ |
-| docs/TEST_CASES.md | E2Eテストケース | |
-| GitHub Issues | 実装状況 | ✓ |
+| ドキュメント       | 内容                         | SSOT |
+| ------------------ | ---------------------------- | ---- |
+| docs/PRD.md        | 機能要件・制約               | ✓    |
+| docs/DESIGN.md     | 技術スタック・アーキテクチャ | ✓    |
+| docs/SCREEN.md     | 画面設計                     | ✓    |
+| docs/COMPONENT.md  | コンポーネント設計           | ✓    |
+| docs/DATA_MODEL.md | データモデル                 | ✓    |
+| docs/TEST_CASES.md | E2Eテストケース              |      |
+| GitHub Issues      | 実装状況                     | ✓    |
 
 ## よく使う npm コマンド
 
