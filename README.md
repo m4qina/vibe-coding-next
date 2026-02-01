@@ -45,7 +45,7 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 ## Workflow
 
-👉 [開発フロー図](./docs/DEVELOPMENT_FLOW.md)
+👉 [開発フロー図](./.claude/docs/DEVELOPMENT_FLOW.md)
 
 | # | フェーズ | コマンド | 成果物 |
 |---|----------|----------|--------|
@@ -96,7 +96,6 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 |----------|------|---------------|
 | docs/INPUT.md | 要件ヒアリングシート | 最初に記載 |
 | reports/COMPETITIVE_ANALYSIS.md | 競合調査レポート | `/project:requirements` |
-| reports/WORK_LOG.md | 作業履歴 | 各フェーズで自動追記 |
 | docs/PRD.md | 要件定義書 | `/project:requirements` |
 | docs/DESIGN.md | 設計書 | `/project:design` |
 | docs/SCREEN.md | 画面設計 | `/project:design` |
@@ -112,12 +111,6 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 - 各競合の強み・弱み
 - 差別化ポイント
 - 参考にすべき点
-
-### reports/WORK_LOG.md（作業履歴）
-- 各フェーズで実施した作業の記録
-- 成果物へのリンク
-- 対応した Issue 番号
-- 変更ファイル一覧
 
 ### docs/PRD.md（要件定義書）
 - プロジェクト概要・背景
@@ -188,10 +181,10 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
    ```
 
 3. **GitHub MCP** を設定
-   👉 [GitHub MCP 設定ガイド](./docs/SETUP_GITHUB_MCP.md)
+   👉 [GitHub MCP 設定ガイド](./.claude/docs/SETUP_GITHUB_MCP.md)
 
 4. **Vercel MCP** を設定
-   👉 [Vercel MCP 設定ガイド](./docs/SETUP_VERCEL_MCP.md)
+   👉 [Vercel MCP 設定ガイド](./.claude/docs/SETUP_VERCEL_MCP.md)
 
 ## License
 

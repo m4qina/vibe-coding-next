@@ -1,6 +1,6 @@
 # 開発フロー
 
-← [README に戻る](../README.md#workflow)
+← [README に戻る](../../README.md#workflow)
 
 ```mermaid
 flowchart TB
@@ -224,4 +224,4 @@ flowchart TB
 
 ---
 
-← [README に戻る](../README.md#workflow)
+← [README に戻る](../../README.md#workflow)

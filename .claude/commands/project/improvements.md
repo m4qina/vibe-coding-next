@@ -89,9 +89,3 @@ Issue化完了後、以下を案内：
    Closes #10, Closes #11, Closes #12
 ```
 
-## 6. 作業履歴
-
-**【必須】reports/WORK_LOG.md に作業履歴を追記**
-- フェーズ名: その他
-- 実施内容: 改善リスト作成・Issue登録
-- 作成したIssue番号一覧

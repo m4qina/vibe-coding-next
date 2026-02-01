@@ -11,7 +11,7 @@ description: 設計を行う
    - 利用可能な場合 → ステップ1へ進む
    - 利用不可の場合 → 以下を案内：
      「GitHub MCP が設定されていません。
-      Issue 管理に必要なため、docs/SETUP_GITHUB_MCP.md の手順に従って設定してください。
+      Issue 管理に必要なため、.claude/docs/SETUP_GITHUB_MCP.md の手順に従って設定してください。
       設定後、再度 /project:design を実行してください」
    - ※ ユーザーが「後で設定する」と言った場合のみ、Issue 作成をスキップして続行可
 
@@ -95,16 +95,6 @@ description: 設計を行う
 
     **Issue 作成に失敗した場合：**
     - エラー内容をユーザーに伝える
-    - docs/SETUP_GITHUB_MCP.md を参照して設定を促す
+    - .claude/docs/SETUP_GITHUB_MCP.md を参照して設定を促す
     - 設定後、Issue 作成のみ再実行可能であることを案内
 
-## 作業履歴
-
-12. **【必須】reports/WORK_LOG.md に作業履歴を追記**
-    - 日付（## YYYY-MM-DD 形式）
-    - フェーズ名（### 設計）
-    - 実施内容
-    - 成果物へのリンク
-    - 作成した Issue 番号一覧（または「Issue 未作成（GitHub MCP 未設定）」）
-    ※ 新しい履歴はファイル上部に追記
-    ※ このステップを省略しないこと
