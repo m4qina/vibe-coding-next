@@ -33,6 +33,10 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 ※ `src/` はAIが初回実装時に自動生成します
 
+## Quick Reference
+
+👉 **[QUICKSTART.md](./QUICKSTART.md)** - コマンド早見表・よくある操作
+
 ## Getting Started
 
 1. このテンプレートから新規リポジトリを作成
