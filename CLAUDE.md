@@ -57,7 +57,7 @@
 | `/project:setup` | 環境構築を行う |
 | `/project:prototype` | プロトタイプ実装（デザインコンセプト確定） |
 | `/project:test-design` | E2Eテスト設計を行う |
-| `/project:implement` | 本実装を行う |
+| `/project:implement <Issue番号>` | 本実装を行う（複数指定で並行開発） |
 | `/project:continue` | 進捗確認・作業再開 |
 | `/project:review` | コードレビューと修正 |
 | `/project:deploy` | デプロイを行う |
@@ -619,4 +619,4 @@ export const useAuth = () => useContext(AuthContext)
 - [開発フロー](./.claude/docs/DEVELOPMENT_FLOW.md)
 - [GitHub MCP 設定](./.claude/docs/SETUP_GITHUB_MCP.md)
 - [Vercel MCP 設定](./.claude/docs/SETUP_VERCEL_MCP.md)
-
+- [Claude Code 権限設定](./.claude/docs/SETUP_PERMISSIONS.md)

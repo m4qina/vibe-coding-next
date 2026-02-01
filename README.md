@@ -74,7 +74,7 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md, COMPONENT.md, DATA_MODEL.md, GitHub Issues |
 | `/project:api` | API設計を行う | docs/openapi.yaml |
 | `/project:prototype` | プロトタイプ実装（デザイン確認用） | src/components/, Storybook, TOP画面 |
-| `/project:implement` | 本実装を行う | src/, Issue更新 |
+| `/project:implement <Issue番号>` | 本実装を行う（複数指定で並行開発） | src/, PR |
 | `/project:continue` | 進捗確認・作業再開 | - |
 | `/project:review` | コードレビューと修正 | - |
 | `/project:deploy` | デプロイを行う | 本番環境, Analytics設定 |
@@ -191,6 +191,9 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 
 4. **Vercel MCP** を設定
    👉 [Vercel MCP 設定ガイド](./.claude/docs/SETUP_VERCEL_MCP.md)
+
+5. **権限設定**（任意）
+   👉 [権限設定ガイド](./.claude/docs/SETUP_PERMISSIONS.md) - コミット・PR確認スキップ
 
 ## License
 
