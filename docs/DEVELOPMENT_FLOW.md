@@ -75,6 +75,13 @@ flowchart TB
         F4 --> F6["Analytics 有効化"]
     end
 
+    subgraph phase10 [10. 改善サイクル]
+        G1["improvements"] --> G2["改善リスト作成"]
+        G2 --> G3["Issue一括登録"]
+        G3 --> G4["関連Issueをまとめて作業"]
+        G4 --> G5["1 PRで複数Issue完了"]
+    end
+
     A3 --> B0
     B6 -->|Yes| C1
     B6 -->|No| S1
@@ -86,6 +93,8 @@ flowchart TB
     D4 --> E1
     E3 --> D3
     E2 -->|全Issue完了| F1
+    F6 --> G1
+    G5 --> G1
 ```
 
 ## 事前準備（MCP設定）
@@ -188,11 +197,24 @@ flowchart TB
 - **成果物**: 本番環境 URL
 - **MCP確認**: Vercel MCP 未設定の場合、設定を要求
 
+### 10. 改善サイクル
+- **コマンド**: `/project:improvements`
+- **処理内容**:
+  - 改善リスト（docs/IMPROVEMENTS.md）の作成・編集
+  - 改善項目を GitHub Issue に一括登録
+  - カテゴリ別にラベル付与（UI/UX, パフォーマンス, バグ修正など）
+- **成果物**: docs/IMPROVEMENTS.md, GitHub Issues
+- **作業フロー**:
+  1. 関連する複数の Issue をまとめて1ブランチで作業
+  2. 1つの PR で複数 Issue をクローズ（`Closes #10, #11, #12`）
+- **タイミング**: デプロイ後、継続的な改善時
+
 ## その他のコマンド
 
 | コマンド | 説明 |
 |----------|------|
 | `/project:review` | コードレビューと修正 |
+| `/project:improvements` | 改善リスト作成・Issue一括登録 |
 
 ## 環境構築の注意
 

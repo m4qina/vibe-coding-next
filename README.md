@@ -56,6 +56,7 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 | 5 | 本実装 | `/project:implement` | src/, Issue更新 |
 | 6 | 繰り返し | `/project:continue` | - |
 | 7 | デプロイ | `/project:deploy` | 本番環境 |
+| 8 | 改善 | `/project:improvements` | docs/IMPROVEMENTS.md, GitHub Issues |
 
 ## Commands
 
@@ -71,6 +72,7 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | `/project:continue` | 進捗確認・作業再開 | - |
 | `/project:review` | コードレビューと修正 | - |
 | `/project:deploy` | デプロイを行う | 本番環境, Analytics設定 |
+| `/project:improvements` | 改善リスト作成・Issue一括登録 | docs/IMPROVEMENTS.md, GitHub Issues |
 
 ## npm Scripts
 
@@ -101,6 +103,7 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | docs/COMPONENT.md | コンポーネント設計 | `/project:design` |
 | docs/ERD.md | ER図（DB使用時） | `/project:design` |
 | docs/openapi.yaml | API設計（OpenAPI 3.0） | `/project:api` |
+| docs/IMPROVEMENTS.md | 改善リスト | `/project:improvements` |
 | GitHub Issues | タスク・進捗管理 | 随時更新 |
 
 ### reports/COMPETITIVE_ANALYSIS.md（競合調査レポート）
@@ -149,12 +152,17 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 - リクエスト / レスポンススキーマ
 - Swagger UI で確認可能
 
+### docs/IMPROVEMENTS.md（改善リスト）
+- 改善予定のリスト管理
+- カテゴリ別に整理（UI/UX, パフォーマンス, バグ修正など）
+- Issue化した項目の追跡
+
 ### GitHub Issues（タスク・進捗管理）
 - タスクの作成・管理
 - 進捗の記録
 - ラベルで分類
   - 初回: feature
-  - 開発中に追加: bug / refactor / docs
+  - 開発中に追加: bug / refactor / docs / improvement
 
 ## Prerequisites
 
