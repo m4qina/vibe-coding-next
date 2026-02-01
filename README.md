@@ -8,6 +8,8 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 ## Tech Stack
 
+> 詳細は [docs/DESIGN.md](./docs/DESIGN.md) を参照
+
 | カテゴリ | 技術 |
 |----------|------|
 | フレームワーク | Next.js (App Router) |
@@ -31,6 +33,10 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 ※ `src/` はAIが初回実装時に自動生成します
 
+## Quick Reference
+
+👉 **[QUICKSTART.md](./QUICKSTART.md)** - コマンド早見表・よくある操作
+
 ## Getting Started
 
 1. このテンプレートから新規リポジトリを作成
@@ -45,7 +51,7 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 ## Workflow
 
-👉 [開発フロー図](./docs/DEVELOPMENT_FLOW.md)
+👉 [開発フロー図](./.claude/docs/DEVELOPMENT_FLOW.md)
 
 | # | フェーズ | コマンド | 成果物 |
 |---|----------|----------|--------|
@@ -56,6 +62,7 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 | 5 | 本実装 | `/project:implement` | src/, Issue更新 |
 | 6 | 繰り返し | `/project:continue` | - |
 | 7 | デプロイ | `/project:deploy` | 本番環境 |
+| 8 | 改善 | `/project:improvements` | docs/IMPROVEMENTS.md, GitHub Issues |
 
 ## Commands
 
@@ -64,13 +71,14 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | コマンド | 説明 | 成果物 |
 |----------|------|--------|
 | `/project:requirements` | 要件定義を行う | docs/PRD.md, reports/COMPETITIVE_ANALYSIS.md |
-| `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md, COMPONENT.md, ERD.md, GitHub Issues |
+| `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md, COMPONENT.md, DATA_MODEL.md, GitHub Issues |
 | `/project:api` | API設計を行う | docs/openapi.yaml |
 | `/project:prototype` | プロトタイプ実装（デザイン確認用） | src/components/, Storybook, TOP画面 |
-| `/project:implement` | 本実装を行う | src/, Issue更新 |
+| `/project:implement <Issue番号>` | 本実装を行う（複数指定で並行開発） | src/, PR |
 | `/project:continue` | 進捗確認・作業再開 | - |
 | `/project:review` | コードレビューと修正 | - |
 | `/project:deploy` | デプロイを行う | 本番環境, Analytics設定 |
+| `/project:improvements` | 改善リスト作成・Issue一括登録 | docs/IMPROVEMENTS.md, GitHub Issues |
 
 ## npm Scripts
 
@@ -94,13 +102,13 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 |----------|------|---------------|
 | docs/INPUT.md | 要件ヒアリングシート | 最初に記載 |
 | reports/COMPETITIVE_ANALYSIS.md | 競合調査レポート | `/project:requirements` |
-| reports/WORK_LOG.md | 作業履歴 | 各フェーズで自動追記 |
 | docs/PRD.md | 要件定義書 | `/project:requirements` |
 | docs/DESIGN.md | 設計書 | `/project:design` |
 | docs/SCREEN.md | 画面設計 | `/project:design` |
 | docs/COMPONENT.md | コンポーネント設計 | `/project:design` |
-| docs/ERD.md | ER図（DB使用時） | `/project:design` |
+| docs/DATA_MODEL.md | データモデル（DB使用時） | `/project:design` |
 | docs/openapi.yaml | API設計（OpenAPI 3.0） | `/project:api` |
+| docs/IMPROVEMENTS.md | 改善リスト | `/project:improvements` |
 | GitHub Issues | タスク・進捗管理 | 随時更新 |
 
 ### reports/COMPETITIVE_ANALYSIS.md（競合調査レポート）
@@ -109,12 +117,6 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 - 各競合の強み・弱み
 - 差別化ポイント
 - 参考にすべき点
-
-### reports/WORK_LOG.md（作業履歴）
-- 各フェーズで実施した作業の記録
-- 成果物へのリンク
-- 対応した Issue 番号
-- 変更ファイル一覧
 
 ### docs/PRD.md（要件定義書）
 - プロジェクト概要・背景
@@ -138,10 +140,10 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 - コンポーネント階層図（Mermaid）
 - 主要コンポーネント詳細（Props, 用途）
 
-### docs/ERD.md（ER図）
-- テーブル一覧
-- ER図（Mermaid）
-- テーブル詳細（カラム定義）
+### docs/DATA_MODEL.md（データモデル）
+- テーブル一覧・ER図
+- テーブル詳細（カラム定義、バリデーション）
+- RLSポリシー
 
 ### docs/openapi.yaml（API設計）
 - OpenAPI 3.0 形式
@@ -149,12 +151,17 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 - リクエスト / レスポンススキーマ
 - Swagger UI で確認可能
 
+### docs/IMPROVEMENTS.md（改善リスト）
+- 改善予定のリスト管理
+- カテゴリ別に整理（UI/UX, パフォーマンス, バグ修正など）
+- Issue化した項目の追跡
+
 ### GitHub Issues（タスク・進捗管理）
 - タスクの作成・管理
 - 進捗の記録
 - ラベルで分類
   - 初回: feature
-  - 開発中に追加: bug / refactor / docs
+  - 開発中に追加: bug / refactor / docs / improvement
 
 ## Prerequisites
 
@@ -180,10 +187,13 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
    ```
 
 3. **GitHub MCP** を設定
-   👉 [GitHub MCP 設定ガイド](./docs/SETUP_GITHUB_MCP.md)
+   👉 [GitHub MCP 設定ガイド](./.claude/docs/SETUP_GITHUB_MCP.md)
 
 4. **Vercel MCP** を設定
-   👉 [Vercel MCP 設定ガイド](./docs/SETUP_VERCEL_MCP.md)
+   👉 [Vercel MCP 設定ガイド](./.claude/docs/SETUP_VERCEL_MCP.md)
+
+5. **権限設定**（任意）
+   👉 [権限設定ガイド](./.claude/docs/SETUP_PERMISSIONS.md) - コミット・PR確認スキップ
 
 ## License
 

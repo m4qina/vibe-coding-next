@@ -4,6 +4,44 @@ description: 実装を行う
 
 以下の手順で本実装を行ってください：
 
+## 引数
+
+- Issue番号（必須）: 単一または複数指定可能
+  - 単一: `30`
+  - 複数: `30,31,32` または `30 31 32`
+
+## 実装フロー
+
+### 単一Issue の場合
+1. develop から feature/#XX ブランチを作成
+2. 実装
+3. コミット（メッセージに `Closes #XX` を含める）
+4. プッシュ・PR作成
+
+### 複数Issue の場合（並行開発）
+1. git worktree で各Issue用の作業ディレクトリを作成
+   ```bash
+   git fetch origin
+   git worktree add ../プロジェクト名-XX -b feature/#XX origin/develop
+   ```
+2. Task ツールで各worktreeに対して並列で実装を実行
+3. 各worktreeでコミット・プッシュ・PR作成
+4. 完了後、worktree を削除
+   ```bash
+   git worktree remove ../プロジェクト名-XX
+   ```
+
+### コミットメッセージ規則
+- `Closes #XX` をメッセージに含める（PRマージ時にIssue自動クローズ）
+- 1コミット1Issueを基本とする
+
+## 注意事項
+
+- 並行開発時、各worktreeで `pnpm install` が必要
+- worktree作成前に `git fetch origin` で最新化すること
+
+---
+
 ## 前提条件の確認
 
 1. プロトタイプ確認
@@ -47,13 +85,14 @@ description: 実装を行う
    - npm run test（Vitest で単体テスト）
    - npm run test:e2e（Playwright でE2Eテスト）
 
-10. 完了したら Issue を更新・クローズ
+10. **ドキュメント更新（該当する場合）**
+    - データモデル変更 → docs/DATA_MODEL.md を更新
+    - 新規コンポーネント追加 → docs/COMPONENT.md を更新
+    - 画面追加・変更 → docs/SCREEN.md を更新
 
-11. **【必須】reports/WORK_LOG.md に作業履歴を追記**
-   - 日付（## YYYY-MM-DD 形式）※同日の場合は日付見出しを再利用
-   - フェーズ名（### 実装）
-   - 対応した Issue 番号とタイトル
-   - 実施内容の概要
-   - 主な変更ファイル一覧
-   ※ 新しい履歴はファイル上部に追記
-   ※ このステップを省略しないこと
+11. 実装完了したらコミット・push
+    - コミットメッセージに `Closes #XX` を含める
+    - 例: `Prettier設定を変更 Closes #34`
+    - 既存のPRがあればpushで自動反映
+    - PRがなければユーザーに確認（まとめてPR作成することがある）
+    - PRマージ時にIssueが自動クローズされる

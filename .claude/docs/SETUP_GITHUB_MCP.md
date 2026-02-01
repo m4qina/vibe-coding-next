@@ -1,6 +1,6 @@
 # GitHub MCP 設定ガイド
 
-← [README に戻る](../README.md#%EF%B8%8F-事前準備)
+← [README に戻る](../../README.md#%EF%B8%8F-事前準備)
 
 このテンプレートで GitHub Issues 連携を使うための設定手順です。
 
@@ -51,4 +51,4 @@ AIに「GitHubのIssue一覧を見せて」と伝えて、連携できていれ�
 
 ---
 
-← [README に戻る](../README.md#%EF%B8%8F-事前準備)
+← [README に戻る](../../README.md#%EF%B8%8F-事前準備)
