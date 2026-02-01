@@ -8,6 +8,8 @@ AIに指示を出すだけで、要件定義から実装まで一貫したフォ
 
 ## Tech Stack
 
+> 詳細は [docs/DESIGN.md](./docs/DESIGN.md) を参照
+
 | カテゴリ | 技術 |
 |----------|------|
 | フレームワーク | Next.js (App Router) |
@@ -65,7 +67,7 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | コマンド | 説明 | 成果物 |
 |----------|------|--------|
 | `/project:requirements` | 要件定義を行う | docs/PRD.md, reports/COMPETITIVE_ANALYSIS.md |
-| `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md, COMPONENT.md, ERD.md, GitHub Issues |
+| `/project:design` | 設計を行う | docs/DESIGN.md, SCREEN.md, COMPONENT.md, DATA_MODEL.md, GitHub Issues |
 | `/project:api` | API設計を行う | docs/openapi.yaml |
 | `/project:prototype` | プロトタイプ実装（デザイン確認用） | src/components/, Storybook, TOP画面 |
 | `/project:implement` | 本実装を行う | src/, Issue更新 |
@@ -100,7 +102,7 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 | docs/DESIGN.md | 設計書 | `/project:design` |
 | docs/SCREEN.md | 画面設計 | `/project:design` |
 | docs/COMPONENT.md | コンポーネント設計 | `/project:design` |
-| docs/ERD.md | ER図（DB使用時） | `/project:design` |
+| docs/DATA_MODEL.md | データモデル（DB使用時） | `/project:design` |
 | docs/openapi.yaml | API設計（OpenAPI 3.0） | `/project:api` |
 | docs/IMPROVEMENTS.md | 改善リスト | `/project:improvements` |
 | GitHub Issues | タスク・進捗管理 | 随時更新 |
@@ -134,10 +136,10 @@ Claude Code で以下のスラッシュコマンドが使用可能です：
 - コンポーネント階層図（Mermaid）
 - 主要コンポーネント詳細（Props, 用途）
 
-### docs/ERD.md（ER図）
-- テーブル一覧
-- ER図（Mermaid）
-- テーブル詳細（カラム定義）
+### docs/DATA_MODEL.md（データモデル）
+- テーブル一覧・ER図
+- テーブル詳細（カラム定義、バリデーション）
+- RLSポリシー
 
 ### docs/openapi.yaml（API設計）
 - OpenAPI 3.0 形式

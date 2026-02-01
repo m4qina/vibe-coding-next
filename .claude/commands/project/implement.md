@@ -47,4 +47,9 @@ description: 実装を行う
    - npm run test（Vitest で単体テスト）
    - npm run test:e2e（Playwright でE2Eテスト）
 
-10. 完了したら Issue を更新・クローズ
+10. **ドキュメント更新（該当する場合）**
+    - データモデル変更 → docs/DATA_MODEL.md を更新
+    - 新規コンポーネント追加 → docs/COMPONENT.md を更新
+    - 画面追加・変更 → docs/SCREEN.md を更新
+
+11. 完了したら Issue を更新・クローズ

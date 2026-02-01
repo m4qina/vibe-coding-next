@@ -36,10 +36,10 @@ description: 設計を行う
    - コンポーネント階層図（Mermaid）
    - 主要コンポーネント詳細（Props, 用途）
 
-5. DB使用の場合、docs/ERD.md を作成
-   - テーブル一覧
-   - ER図（Mermaid）
-   - テーブル詳細（カラム定義）
+5. DB使用の場合、docs/DATA_MODEL.md を作成
+   - テーブル一覧・ER図（Mermaid）
+   - テーブル詳細（カラム、型、バリデーション）
+   - RLSポリシー（Supabase使用時）
 
 6. フォーマットは CLAUDE.md の各テンプレートに従う
 

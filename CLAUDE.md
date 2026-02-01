@@ -627,6 +627,8 @@ export const useAuth = () => useContext(AuthContext)
 
 ### PRD.md テンプレート
 
+**※ PRD.md は機能要件・制約の SSOT（単一の情報源）**
+
 ```markdown
 # プロジェクト名
 
@@ -642,43 +644,53 @@ export const useAuth = () => useContext(AuthContext)
 ## 4. 機能一覧
 
 ### MVP（必須）
-- [ ] 機能A
-- [ ] 機能B
+- 機能A
+- 機能B
 
 ### 将来対応
-- [ ] 機能C
+- 機能C
+
+※ 実装状況は GitHub Issues で管理（PRD では機能定義のみ）
 
 ## 5. 非機能要件
 - 対応ブラウザ: Chrome, Safari, Edge 最新版
 - レスポンシブ: 対応
 
-## 6. マネタイズ（該当する場合）
-<!-- 収益化モデル: 広告 / サブスク / 買い切り / フリーミアム / なし -->
-<!-- 課金機能が必要な場合は決済手段も記載 -->
+## 6. 制約・前提条件
+<!-- 技術的制約、ビジネス上の制約など -->
 ```
 
 ### DESIGN.md テンプレート
 
+**※ DESIGN.md は技術スタック・アーキテクチャの SSOT（単一の情報源）**
+
 ```markdown
 # 設計書
 
-## 1. 技術スタック
-<!-- 使用技術一覧 -->
+> 機能要件は [PRD.md](./PRD.md) を参照
 
-## 2. ディレクトリ構成
+## 1. 技術スタック（SSOT）
+<!-- このセクションが技術選定の正式な情報源 -->
+
+| カテゴリ | 技術 | 選定理由 |
+|----------|------|----------|
+| フレームワーク | Next.js | - |
+| 言語 | TypeScript | - |
+| スタイリング | Tailwind CSS | - |
+| DB | Supabase | - |
+| 認証 | Supabase Auth | - |
+| 決済 | - | - |
+
+## 2. ディレクトリ構成（SSOT）
 <!-- フォルダ構造 -->
 
 ## 3. 状態管理
 <!-- 状態管理の方針 -->
 
 ## 4. データストレージ
-<!-- 使用する / 使用しない を選択 -->
 
 ### 方針
 <!-- 例: Supabase / なし（ローカルストレージのみ）/ なし（静的サイト） -->
-
-### 選定理由
-<!-- なぜこの方針を選んだか -->
 
 ### 環境構成（Supabase 使用時）
 | 環境 | 接続先 |
@@ -686,20 +698,15 @@ export const useAuth = () => useContext(AuthContext)
 | ローカル | Supabase Local（Docker） |
 | 本番 | Supabase Cloud |
 
-### 認証（Supabase 使用時）
-<!-- 使用する認証方式を選択 -->
-- [ ] Email / Password
-- [ ] Magic Link（パスワードレス）
-- [ ] OAuth（Google, GitHub など）
-- [ ] なし（認証不要）
+### 認証方式（Supabase 使用時）
+<!-- 使用する認証方式 -->
+- Email / Password
+- OAuth（Google, GitHub など）
 
 ### ファイルストレージ（Supabase 使用時）
-<!-- 画像等のアップロードが必要な場合 -->
-- [ ] 使用する（Supabase Storage）
-- [ ] 使用しない
+<!-- 画像等のアップロード: 使用する / 使用しない -->
 
 ## 5. データ通信方針
-<!-- API / Server Actions / なし のいずれかを選択し、理由を記載 -->
 
 ### 方針
 <!-- 例: Server Actions / REST API / GraphQL / なし（静的サイト） -->
@@ -707,15 +714,11 @@ export const useAuth = () => useContext(AuthContext)
 ### 選定理由
 <!-- なぜこの方針を選んだか -->
 
-### 補足
-<!-- 外部API連携がある場合はここに記載 -->
-
-## 6. 主要コンポーネント
-<!-- コンポーネント設計 -->
-
-## 7. 外部連携
+## 6. 外部連携
 <!-- API、外部サービス -->
 ```
+
+※ コンポーネント設計は COMPONENT.md、データモデルは DATA_MODEL.md を参照
 
 ### TEST_CASES.md テンプレート
 
@@ -857,10 +860,15 @@ graph TD
 - 用途: 全ページ共通ヘッダー
 ```
 
-### ERD.md テンプレート（DB使用時）
+### DATA_MODEL.md テンプレート（DB使用時）
+
+**※ DATA_MODEL.md はデータモデルの SSOT（単一の情報源）**
 
 ```markdown
-# ER図
+# データモデル
+
+> このファイルがデータ構造の正式な定義です。
+> 実装時はこのファイルを参照してください。
 
 ## 1. テーブル一覧
 
@@ -892,12 +900,41 @@ erDiagram
 ## 3. テーブル詳細
 
 ### users
-| カラム | 型 | 説明 |
-|--------|-----|------|
-| id | string | 主キー |
-| email | string | メールアドレス |
-| name | string | ユーザー名 |
-| created_at | datetime | 作成日時 |
+
+| カラム | 型 | NULL | デフォルト | 説明 |
+|--------|-----|------|-----------|------|
+| id | uuid | NO | gen_random_uuid() | 主キー |
+| email | text | NO | - | メールアドレス（一意） |
+| name | text | NO | - | ユーザー名 |
+| created_at | timestamptz | NO | now() | 作成日時 |
+
+**バリデーション:**
+- email: メール形式
+- name: 1-50文字
+
+### posts
+
+| カラム | 型 | NULL | デフォルト | 説明 |
+|--------|-----|------|-----------|------|
+| id | uuid | NO | gen_random_uuid() | 主キー |
+| user_id | uuid | NO | - | 外部キー（users.id） |
+| title | text | NO | - | タイトル |
+| content | text | YES | - | 本文 |
+| created_at | timestamptz | NO | now() | 作成日時 |
+
+**バリデーション:**
+- title: 1-100文字
+
+## 4. RLS（Row Level Security）ポリシー
+
+### users
+- SELECT: 認証ユーザーは自分のデータのみ
+- UPDATE: 認証ユーザーは自分のデータのみ
+
+### posts
+- SELECT: 全員が閲覧可能
+- INSERT: 認証ユーザーのみ
+- UPDATE/DELETE: 投稿者のみ
 ```
 
 ### openapi.yaml テンプレート
@@ -1102,6 +1139,22 @@ components:
 <!-- デザインの参考にしたサイトやスクリーンショット -->
 <!-- URL や特徴を記載 -->
 ```
+
+---
+
+## 10. SSOT（Single Source of Truth）
+
+各情報の正式な管理場所：
+
+| 情報 | SSOT | 備考 |
+|------|------|------|
+| 機能要件・制約 | docs/PRD.md | 他では参照リンク |
+| 技術スタック | docs/DESIGN.md | README.mdは簡易版 |
+| ディレクトリ構成 | docs/DESIGN.md | - |
+| データモデル | docs/DATA_MODEL.md | バリデーション含む |
+| コンポーネント | docs/COMPONENT.md | - |
+| 画面設計 | docs/SCREEN.md | - |
+| 実装状況 | GitHub Issues | PRDにはチェック不要 |
 
 ---
 

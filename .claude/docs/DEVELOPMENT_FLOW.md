@@ -125,7 +125,7 @@ flowchart TB
   - データストレージ方針決定（Supabase / なし）
   - Supabase 使用時: 認証方式・ファイルストレージの決定
   - タスク起票（GitHub Issues）
-- **成果物**: docs/DESIGN.md, docs/SCREEN.md, docs/COMPONENT.md, docs/ERD.md（DB使用時）, GitHub Issues
+- **成果物**: docs/DESIGN.md, docs/SCREEN.md, docs/COMPONENT.md, docs/DATA_MODEL.md（DB使用時）, GitHub Issues
 - **MCP確認**: GitHub MCP 未設定の場合、設定を要求（Issue 作成に必須）
 
 ### 3. API設計（オプション）
